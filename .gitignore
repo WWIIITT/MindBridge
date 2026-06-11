@@ -8,3 +8,4 @@ data/
 logs/
 .DS_Store
 *.log
+*.gguf
