@@ -205,7 +205,12 @@ cd MindBridge
 ./scripts/run-dev.sh
 ```
 
-如果終端提示 `ollama: command not found`，說明只是命令鏈接沒建好；本項目腳本會直接調用 `/Applications/Ollama.app/Contents/Resources/ollama`。
+如果終端提示 `ollama: command not found`，說明只是命令鏈接沒建好；本項目腳本會自動嘗試 macOS 的 `/Applications/Ollama.app/Contents/Resources/ollama`，以及 WSL 中的 Windows 默認安裝位置 `/mnt/c/Users/<你的 Windows 用戶名>/AppData/Local/Programs/Ollama/ollama.exe`。從 WSL 調用 Windows `ollama.exe` 時，腳本會自動把 `Modelfile` 路徑轉成 Windows 路徑。如果仍找不到 Ollama，可以手動指定：
+
+```bash
+OLLAMA_BIN="/mnt/c/Users/<你的 Windows 用戶名>/AppData/Local/Programs/Ollama/ollama.exe" \
+./scripts/create-finetuned-model.sh
+```
 
 沒有本地模型、只想離線演示完整業務流程時，才使用 mock：
 
