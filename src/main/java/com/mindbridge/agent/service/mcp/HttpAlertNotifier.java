@@ -7,7 +7,7 @@ import java.util.Map;
 import org.springframework.web.reactive.function.client.WebClient;
 
 /**
- * 通过 HTTP MCP 服务发送高风险预警。
+ * 通過 HTTP MCP 服務發送高風險預警。
  */
 public class HttpAlertNotifier implements AlertNotifier {
 

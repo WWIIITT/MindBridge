@@ -13,10 +13,10 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 /**
- * Spring AI 大模型客户端装配配置。
+ * Spring AI 大模型客戶端裝配配置。
  *
- * <p>根据 application.yml 或环境变量选择本地项目模型、OpenAI 或 mock 客户端，
- * 让业务服务只依赖统一的 {@link AiClient} 接口。</p>
+ * <p>根據 application.yml 或環境變量選擇本地項目模型、OpenAI 或 mock 客戶端，
+ * 讓業務服務只依賴統一的 {@link AiClient} 接口。</p>
  */
 @Configuration
 public class AiClientConfig {

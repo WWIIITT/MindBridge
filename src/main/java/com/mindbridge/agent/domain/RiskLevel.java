@@ -1,7 +1,7 @@
 package com.mindbridge.agent.domain;
 
 /**
- * 后台风险等级，用于工具链判断和管理员统计。
+ * 後颱風險等級，用於工具鏈判斷和管理員統計。
  */
 public enum RiskLevel {
     LOW,

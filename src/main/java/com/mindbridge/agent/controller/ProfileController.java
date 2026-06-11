@@ -10,9 +10,9 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/api/profile")
 /**
- * 当前登录账号信息接口。
+ * 當前登錄賬號信息接口。
  *
- * <p>前端通过角色判断展示学生聊天界面还是管理员后台。</p>
+ * <p>前端通過角色判斷展示學生聊天界面還是管理員後臺。</p>
  */
 public class ProfileController {
 

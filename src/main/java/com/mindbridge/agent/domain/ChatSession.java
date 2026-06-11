@@ -14,9 +14,9 @@ import java.time.Instant;
 @Entity
 @Table(name = "chat_sessions")
 /**
- * 一次连续对话会话。
+ * 一次連續對話會話。
  *
- * <p>publicId 暴露给前端使用，数据库自增 id 只在服务端内部关联。</p>
+ * <p>publicId 暴露給前端使用，數據庫自增 id 只在服務端內部關聯。</p>
  */
 public class ChatSession {
 
@@ -77,7 +77,7 @@ public class ChatSession {
     }
 
     public void touch() {
-        // 每次新增消息时更新时间，后台列表可以按最近活跃排序。
+        // 每次新增消息時更新時間，後臺列表可以按最近活躍排序。
         this.updatedAt = Instant.now();
     }
 }

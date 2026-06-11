@@ -6,14 +6,14 @@ import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
- * 预警发送记录的数据访问接口。
+ * 預警發送記錄的數據訪問接口。
  */
 public interface AlertRecordRepository extends JpaRepository<AlertRecord, Long> {
 
     List<AlertRecord> findByReport_Id(Long reportId);
 
     /**
-     * 管理员后台列表需要同时展示报告、学生账号和会话 id，使用 EntityGraph 避免懒加载反复查询。
+     * 管理員後臺列表需要同時展示報告、學生賬號和會話 id，使用 EntityGraph 避免懶加載反覆查詢。
      */
     @EntityGraph(attributePaths = {"report", "report.user", "report.session"})
     List<AlertRecord> findTop100ByOrderByCreatedAtDesc();

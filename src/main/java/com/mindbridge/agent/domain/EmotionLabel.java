@@ -1,9 +1,9 @@
 package com.mindbridge.agent.domain;
 
 /**
- * 后台情绪标签。
+ * 後臺情緒標籤。
  *
- * <p>这些标签只用于报告和管理员后台，不直接展示给学生。</p>
+ * <p>這些標籤只用於報告和管理員後臺，不直接展示給學生。</p>
  */
 public enum EmotionLabel {
     NORMAL,

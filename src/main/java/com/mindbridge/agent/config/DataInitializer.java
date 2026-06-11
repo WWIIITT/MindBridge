@@ -31,7 +31,7 @@ public class DataInitializer implements ApplicationRunner {
 
     @Override
     public void run(ApplicationArguments args) {
-        // 首次启动准备演示账号和内置知识库；已有数据时不会覆盖。
+        // 首次啓動準備演示賬號和內置知識庫；已有數據時不會覆蓋。
         seedUsers();
         knowledgeIngestionService.ingestClasspathKnowledgeIfEmpty();
     }
@@ -40,7 +40,7 @@ public class DataInitializer implements ApplicationRunner {
         if (userAccountRepository.count() > 0) {
             return;
         }
-        // 管理员账号用于后台查看，学生账号用于正常聊天体验。
+        // 管理員賬號用於後臺查看，學生賬號用於正常聊天體驗。
         UserAccount admin = new UserAccount();
         admin.setUsername("admin");
         admin.setDisplayName("Counselor Admin");

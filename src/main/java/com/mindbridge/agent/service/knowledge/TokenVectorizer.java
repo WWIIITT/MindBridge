@@ -4,9 +4,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * 本地轻量文本向量器。
+ * 本地輕量文本向量器。
  *
- * <p>在没有外部向量服务时，用词频和中文 bigram 提供一个可用的检索兜底。</p>
+ * <p>在沒有外部向量服務時，用詞頻和中文 bigram 提供一個可用的檢索兜底。</p>
  */
 public class TokenVectorizer {
 

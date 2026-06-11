@@ -16,9 +16,9 @@ import java.time.Instant;
 @Entity
 @Table(name = "alert_records")
 /**
- * 高风险预警发送记录。
+ * 高風險預警發送記錄。
  *
- * <p>一条心理报告可能对应多个收件人，每个收件人都有独立的发送状态、重试次数和错误信息。</p>
+ * <p>一條心理報告可能對應多個收件人，每個收件人都有獨立的發送狀態、重試次數和錯誤信息。</p>
  */
 public class AlertRecord {
 

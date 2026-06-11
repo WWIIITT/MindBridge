@@ -8,7 +8,7 @@ import com.mindbridge.agent.domain.ToolStatus;
 import java.time.Instant;
 
 /**
- * 后台心理报告列表响应。
+ * 後臺心理報告列表響應。
  */
 public record ReportResponse(
         Long id,

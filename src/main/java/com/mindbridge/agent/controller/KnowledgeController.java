@@ -21,9 +21,9 @@ import reactor.core.publisher.Mono;
 @RestController
 @RequestMapping("/api/admin/knowledge")
 /**
- * 管理员知识库维护接口。
+ * 管理員知識庫維護接口。
  *
- * <p>支持直接写入文本，也支持上传 PDF、Markdown、txt 文件作为 RAG 知识库来源。</p>
+ * <p>支持直接寫入文本，也支持上傳 PDF、Markdown、txt 文件作爲 RAG 知識庫來源。</p>
  */
 public class KnowledgeController {
 
@@ -37,14 +37,14 @@ public class KnowledgeController {
 
     @PostMapping
     public KnowledgeIngestResponse ingest(@Valid @RequestBody KnowledgeIngestRequest request) {
-        // JSON 接口适合脚本或调试时直接写入一段知识。
+        // JSON 接口適合腳本或調試時直接寫入一段知識。
         int chunks = knowledgeService.ingest(request.source(), request.content());
         return new KnowledgeIngestResponse(request.source(), chunks);
     }
 
     @PostMapping(value = "/file", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public Mono<KnowledgeIngestResponse> ingestFile(@RequestPart("file") FilePart file) {
-        // WebFlux 的 FilePart 是流式数据，这里合并成 byte[] 后交给文件解析服务。
+        // WebFlux 的 FilePart 是流式數據，這裏合併成 byte[] 後交給文件解析服務。
         return DataBufferUtils.join(file.content())
                 .map(dataBuffer -> {
                     byte[] bytes = readBytes(dataBuffer);
@@ -59,7 +59,7 @@ public class KnowledgeController {
             dataBuffer.asInputStream().transferTo(output);
             return output.toByteArray();
         } catch (IOException exception) {
-            throw new IllegalArgumentException("文件读取失败：" + exception.getMessage());
+            throw new IllegalArgumentException("文件讀取失敗：" + exception.getMessage());
         } finally {
             DataBufferUtils.release(dataBuffer);
         }

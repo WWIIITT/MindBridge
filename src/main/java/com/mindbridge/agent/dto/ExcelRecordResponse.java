@@ -8,7 +8,7 @@ import com.mindbridge.agent.domain.ToolStatus;
 import java.time.Instant;
 
 /**
- * 管理员后台 Excel 写入数据响应。
+ * 管理員後臺 Excel 寫入數據響應。
  */
 public record ExcelRecordResponse(
         Long reportId,

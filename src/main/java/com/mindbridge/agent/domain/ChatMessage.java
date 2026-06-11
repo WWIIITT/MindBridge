@@ -17,9 +17,9 @@ import java.time.Instant;
 @Entity
 @Table(name = "chat_messages")
 /**
- * 单条会话消息。
+ * 單條會話消息。
  *
- * <p>保存学生输入、助手回复和必要的系统消息，用于后续上下文构建和管理员完整会话回看。</p>
+ * <p>保存學生輸入、助手回覆和必要的系統消息，用於後續上下文構建和管理員完整會話回看。</p>
  */
 public class ChatMessage {
 

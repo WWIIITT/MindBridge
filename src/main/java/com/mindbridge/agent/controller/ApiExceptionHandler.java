@@ -11,9 +11,9 @@ import org.springframework.web.server.ResponseStatusException;
 
 @RestControllerAdvice
 /**
- * API 统一异常处理。
+ * API 統一異常處理。
  *
- * <p>把常见异常转换成稳定的 JSON 消息，前端可以直接显示错误原因。</p>
+ * <p>把常見異常轉換成穩定的 JSON 消息，前端可以直接顯示錯誤原因。</p>
  */
 public class ApiExceptionHandler {
 

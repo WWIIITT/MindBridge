@@ -20,8 +20,8 @@
             </div>
           </div>
           <div class="status-stack">
-            <p id="serviceState" class="status-pill">连接中</p>
-            <p id="modelState" class="status-pill">模型模式：读取中</p>
+            <p id="serviceState" class="status-pill">連接中</p>
+            <p id="modelState" class="status-pill">模型模式：讀取中</p>
           </div>
           <div class="brand-visual">
             <img src="/assets/mindbridge-campus-companion.png" alt="">
@@ -31,97 +31,97 @@
         <form id="loginForm" class="panel">
           <div class="panel-title">
             <div>
-              <h2>访问账号</h2>
+              <h2>訪問賬號</h2>
               <p id="loginState" class="state">student / student123</p>
             </div>
           </div>
           <label class="field">
-            <span>账号</span>
+            <span>賬號</span>
             <input id="username" name="username" value="student" autocomplete="username">
           </label>
           <label class="field">
-            <span>密码</span>
+            <span>密碼</span>
             <input id="password" name="password" value="student123" type="password" autocomplete="current-password">
           </label>
-          <button type="submit" class="primary-action">登录</button>
+          <button type="submit" class="primary-action">登錄</button>
         </form>
 
         <section id="accountPanel" class="panel account-panel" hidden>
           <div>
-            <p class="eyebrow">当前账号</p>
-            <h2 id="activeAccount">已登录</h2>
-            <p id="activeRole" class="state">在线</p>
+            <p class="eyebrow">當前賬號</p>
+            <h2 id="activeAccount">已登錄</h2>
+            <p id="activeRole" class="state">在線</p>
           </div>
-          <button id="switchAccount" type="button" class="ghost">切换账号</button>
+          <button id="switchAccount" type="button" class="ghost">切換賬號</button>
         </section>
 
         <section id="studentCompanionPanel" class="panel companion-panel">
           <div class="panel-head compact">
             <div>
               <p class="eyebrow">Companion Modes</p>
-              <h2>今日可以聊这些</h2>
+              <h2>今日可以聊這些</h2>
             </div>
           </div>
           <div class="mode-list">
-            <button type="button" class="mode-item prompt-chip" data-prompt="我最近学习效率不高，可以帮我做一个今晚的复习计划吗？">
+            <button type="button" class="mode-item prompt-chip" data-prompt="我最近學習效率不高，可以幫我做一個今晚的複習計劃嗎？">
               <span class="mode-icon">✦</span>
               <span>
-                <strong>学习规划</strong>
-                <small>复习、论文、项目思路</small>
+                <strong>學習規劃</strong>
+                <small>複習、論文、項目思路</small>
               </span>
             </button>
-            <button type="button" class="mode-item prompt-chip" data-prompt="我最近有点焦虑，晚上睡不着，可以陪我梳理一下吗？">
+            <button type="button" class="mode-item prompt-chip" data-prompt="我最近有點焦慮，晚上睡不着，可以陪我梳理一下嗎？">
               <span class="mode-icon">◐</span>
               <span>
-                <strong>情绪梳理</strong>
-                <small>压力、焦虑、睡眠困扰</small>
+                <strong>情緒梳理</strong>
+                <small>壓力、焦慮、睡眠困擾</small>
               </span>
             </button>
-            <button type="button" class="mode-item prompt-chip" data-prompt="我想练习一次和老师沟通项目进度的表达，你能帮我模拟一下吗？">
+            <button type="button" class="mode-item prompt-chip" data-prompt="我想練習一次和老師溝通項目進度的表達，你能幫我模擬一下嗎？">
               <span class="mode-icon">⌁</span>
               <span>
-                <strong>沟通演练</strong>
-                <small>室友、老师、同学交流</small>
+                <strong>溝通演練</strong>
+                <small>室友、老師、同學交流</small>
               </span>
             </button>
           </div>
-          <p class="care-note">高风险表达会进入后台预警流程，普通聊天不会展示评估标签。</p>
+          <p class="care-note">高風險表達會進入後臺預警流程，普通聊天不會展示評估標籤。</p>
         </section>
 
         <section id="adminSidePanel" class="panel admin-side-panel" hidden>
           <div class="panel-head compact">
             <div>
               <p class="eyebrow">Admin Radar</p>
-              <h2>后台巡检</h2>
-              <p class="state">关注高风险、邮件失败和知识库更新。</p>
+              <h2>後臺巡檢</h2>
+              <p class="state">關注高風險、郵件失敗和知識庫更新。</p>
             </div>
           </div>
           <div class="admin-radar">
             <div class="radar-row">
-              <span>高风险优先级</span>
+              <span>高風險優先級</span>
               <strong id="sideHighRisk">--</strong>
             </div>
             <div class="radar-row">
-              <span>邮件失败</span>
+              <span>郵件失敗</span>
               <strong id="sideMailFailed">--</strong>
             </div>
             <div class="radar-row">
-              <span>报告总数</span>
+              <span>報告總數</span>
               <strong id="sideReports">--</strong>
             </div>
           </div>
           <div class="admin-action-stack">
-            <button id="sideRefresh" type="button" class="ghost" data-admin-refresh>刷新后台</button>
-            <button type="button" class="ghost" data-scroll-target="knowledgeUploadForm">上传知识</button>
+            <button id="sideRefresh" type="button" class="ghost" data-admin-refresh>刷新後臺</button>
+            <button type="button" class="ghost" data-scroll-target="knowledgeUploadForm">上傳知識</button>
           </div>
-          <p class="care-note">管理端只显示汇总与记录，不提供学生聊天入口。</p>
+          <p class="care-note">管理端只顯示彙總與記錄，不提供學生聊天入口。</p>
         </section>
 
         <section class="panel reports-panel" hidden>
           <div class="panel-head">
             <div>
-              <h2 id="reportsTitle">后台记录</h2>
-              <p id="reportsCaption" class="state">仅管理员可见</p>
+              <h2 id="reportsTitle">後臺記錄</h2>
+              <p id="reportsCaption" class="state">僅管理員可見</p>
             </div>
             <button id="refreshReports" type="button" class="ghost">刷新</button>
           </div>
@@ -133,13 +133,13 @@
         <header id="chatHead" class="chat-head">
           <div class="chat-title">
             <p class="eyebrow">MindBridge Console</p>
-            <h2>智能对话</h2>
-            <p id="profileText">未登录</p>
+            <h2>智能對話</h2>
+            <p id="profileText">未登錄</p>
           </div>
           <div class="chat-actions">
-            <button id="newSessionButton" type="button" class="ghost">新对话</button>
+            <button id="newSessionButton" type="button" class="ghost">新對話</button>
             <div class="session-meter">
-              <span>会话状态</span>
+              <span>會話狀態</span>
               <div id="sessionBadge" class="badge">READY</div>
             </div>
           </div>
@@ -151,10 +151,10 @@
           <header class="admin-dashboard-head">
             <div>
               <p class="eyebrow">Admin Console</p>
-              <h2>管理后台</h2>
-              <p class="state">查看学生对话记录、Excel 写入数据和高风险邮件通知。</p>
+              <h2>管理後臺</h2>
+              <p class="state">查看學生對話記錄、Excel 寫入數據和高風險郵件通知。</p>
             </div>
-            <button id="adminRefresh" type="button" class="ghost" data-admin-refresh>刷新数据</button>
+            <button id="adminRefresh" type="button" class="ghost" data-admin-refresh>刷新數據</button>
           </header>
 
           <div id="adminStats" class="admin-stats"></div>
@@ -162,40 +162,40 @@
           <section class="admin-tools">
             <form id="knowledgeUploadForm" class="knowledge-upload">
               <div>
-                <h3>知识库上传</h3>
+                <h3>知識庫上傳</h3>
                 <p id="knowledgeUploadState" class="state">支持 PDF、Markdown、txt 文件</p>
               </div>
               <label class="file-picker">
                 <input id="knowledgeFile" type="file" accept=".pdf,.md,.markdown,.txt,application/pdf,text/markdown,text/plain">
-                <span>选择文件</span>
+                <span>選擇文件</span>
               </label>
-              <button type="submit" class="ghost">上传</button>
+              <button type="submit" class="ghost">上傳</button>
             </form>
           </section>
 
-          <section id="adminCharts" class="admin-visuals" aria-label="统计图表"></section>
+          <section id="adminCharts" class="admin-visuals" aria-label="統計圖表"></section>
 
           <div class="admin-sections">
             <section class="admin-section">
               <div class="admin-section-head">
-                <h3>对话记录</h3>
-                <p class="state">点击任一记录查看完整对话</p>
+                <h3>對話記錄</h3>
+                <p class="state">點擊任一記錄查看完整對話</p>
               </div>
               <div id="adminReportRows" class="admin-table"></div>
             </section>
 
             <section class="admin-section">
               <div class="admin-section-head">
-                <h3>Excel 写入数据</h3>
-                <p class="state">点击记录查看写入字段详情</p>
+                <h3>Excel 寫入數據</h3>
+                <p class="state">點擊記錄查看寫入字段詳情</p>
               </div>
               <div id="excelRows" class="admin-table"></div>
             </section>
 
             <section class="admin-section">
               <div class="admin-section-head">
-                <h3>邮件发送记录</h3>
-                <p class="state">点击记录查看发送详情</p>
+                <h3>郵件發送記錄</h3>
+                <p class="state">點擊記錄查看發送詳情</p>
               </div>
               <div id="emailRows" class="admin-table"></div>
             </section>
@@ -204,14 +204,14 @@
 
         <form id="chatForm" class="composer">
           <div class="composer-main">
-            <div class="prompt-row" aria-label="快捷问题">
-              <button type="button" class="prompt-chip" data-prompt="帮我把今天的任务拆成一个可执行计划">任务拆解</button>
-              <button type="button" class="prompt-chip" data-prompt="我想了解一个机器学习概念，可以用例子讲清楚吗？">概念讲解</button>
-              <button type="button" class="prompt-chip" data-prompt="我现在有点烦躁，帮我做一次情绪整理">情绪整理</button>
+            <div class="prompt-row" aria-label="快捷問題">
+              <button type="button" class="prompt-chip" data-prompt="幫我把今天的任務拆成一個可執行計劃">任務拆解</button>
+              <button type="button" class="prompt-chip" data-prompt="我想了解一個機器學習概念，可以用例子講清楚嗎？">概念講解</button>
+              <button type="button" class="prompt-chip" data-prompt="我現在有點煩躁，幫我做一次情緒整理">情緒整理</button>
             </div>
-            <textarea id="messageInput" rows="3" placeholder="输入你想说的话"></textarea>
+            <textarea id="messageInput" rows="3" placeholder="輸入你想說的話"></textarea>
           </div>
-          <button id="sendButton" type="submit" class="send-action">发送</button>
+          <button id="sendButton" type="submit" class="send-action">發送</button>
         </form>
       </section>
     </section>
@@ -221,11 +221,11 @@
     <div class="conversation-panel" role="dialog" aria-modal="true" aria-labelledby="conversationTitle">
       <header class="conversation-head">
         <div>
-          <p id="conversationKicker" class="eyebrow">完整对话</p>
-          <h2 id="conversationTitle">对话记录</h2>
+          <p id="conversationKicker" class="eyebrow">完整對話</p>
+          <h2 id="conversationTitle">對話記錄</h2>
           <p id="conversationMeta" class="state"></p>
         </div>
-        <button id="closeConversation" type="button" class="ghost">关闭</button>
+        <button id="closeConversation" type="button" class="ghost">關閉</button>
       </header>
       <div id="conversationMessages" class="conversation-messages"></div>
     </div>

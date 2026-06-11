@@ -5,10 +5,10 @@ import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
- * 用户账号的数据访问接口。
+ * 用戶賬號的數據訪問接口。
  */
 public interface UserAccountRepository extends JpaRepository<UserAccount, Long> {
 
-    /** 登录认证时按用户名加载账号。 */
+    /** 登錄認證時按用戶名加載賬號。 */
     Optional<UserAccount> findByUsername(String username);
 }

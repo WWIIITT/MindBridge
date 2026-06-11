@@ -10,9 +10,9 @@ import reactor.core.scheduler.Schedulers;
 
 @Service
 /**
- * 登录认证时的账号加载服务。
+ * 登錄認證時的賬號加載服務。
  *
- * <p>项目使用响应式 WebFlux，但 JPA 是阻塞访问，因此查询放到 boundedElastic 线程池。</p>
+ * <p>項目使用響應式 WebFlux，但 JPA 是阻塞訪問，因此查詢放到 boundedElastic 線程池。</p>
  */
 public class CurrentUserDetailsService implements ReactiveUserDetailsService {
 

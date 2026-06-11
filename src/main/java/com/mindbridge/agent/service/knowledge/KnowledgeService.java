@@ -14,9 +14,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 /**
- * RAG 知识库核心服务。
+ * RAG 知識庫核心服務。
  *
- * <p>负责知识入库、向量写入、检索排序和命中上下文扩展，是咨询/风险回答的知识来源。</p>
+ * <p>負責知識入庫、向量寫入、檢索排序和命中上下文擴展，是諮詢/風險回答的知識來源。</p>
  */
 public class KnowledgeService {
 
@@ -44,7 +44,7 @@ public class KnowledgeService {
 
     @Transactional
     public int ingest(String source, String content) {
-        // 同一 source 重新上传时先清旧数据，保证后台知识库展示的是最新文件内容。
+        // 同一 source 重新上傳時先清舊數據，保證後臺知識庫展示的是最新文件內容。
         List<String> chunks = chunker.chunk(
                 content,
                 properties.getKnowledge().getChunkSize(),
@@ -56,7 +56,7 @@ public class KnowledgeService {
             chunk.setSource(source);
             chunk.setSourceIndex(index);
             chunk.setContent(chunks.get(index));
-            // 有 embedding 配置时写入向量；没有配置时保持为空，检索会自动走本地兜底。
+            // 有 embedding 配置時寫入向量；沒有配置時保持爲空，檢索會自動走本地兜底。
             chunk.setEmbeddingJson(serializeEmbedding(safeEmbedding(chunks.get(index))));
             KnowledgeChunk saved = knowledgeChunkRepository.save(chunk);
             chromaGateway.mirror(saved);
@@ -66,7 +66,7 @@ public class KnowledgeService {
 
     @Transactional(readOnly = true)
     public List<SearchResult> retrieve(String query, int topK) {
-        // 检索优先级：外部向量库 -> 数据库存储的 embedding -> 本地轻量打分。
+        // 檢索優先級：外部向量庫 -> 數據庫存儲的 embedding -> 本地輕量打分。
         List<SearchResult> chromaResults = chromaGateway.query(query, topK);
         if (!chromaResults.isEmpty()) {
             return expandBestContext(chromaResults, topK);
@@ -109,7 +109,7 @@ public class KnowledgeService {
         if (ranked.isEmpty()) {
             return ranked;
         }
-        // 命中片段前后各补一段，减少切块边界导致的上下文断裂。
+        // 命中片段前後各補一段，減少切塊邊界導致的上下文斷裂。
         SearchResult best = ranked.get(0);
         SearchResult expanded = expand(best);
         List<SearchResult> results = new ArrayList<>();
@@ -155,7 +155,7 @@ public class KnowledgeService {
         try {
             return embeddingClient.embed(text);
         } catch (Exception ignored) {
-            // embedding 失败不影响知识库可用性，后续会回退到本地检索。
+            // embedding 失敗不影響知識庫可用性，後續會回退到本地檢索。
             return List.of();
         }
     }

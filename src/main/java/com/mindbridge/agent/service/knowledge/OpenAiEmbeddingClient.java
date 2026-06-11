@@ -9,9 +9,9 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.web.reactive.function.client.WebClient;
 
 /**
- * OpenAI 兼容 embedding 客户端。
+ * OpenAI 兼容 embedding 客戶端。
  *
- * <p>用于把上传知识和查询文本转换成向量；未配置 API Key 时保持无副作用返回空结果。</p>
+ * <p>用於把上傳知識和查詢文本轉換成向量；未配置 API Key 時保持無副作用返回空結果。</p>
  */
 public class OpenAiEmbeddingClient implements EmbeddingClient {
 
@@ -29,7 +29,7 @@ public class OpenAiEmbeddingClient implements EmbeddingClient {
 
     @Override
     public List<Double> embed(String text) {
-        // API Key 为空时直接返回空向量，让 RAG 使用本地检索兜底。
+        // API Key 爲空時直接返回空向量，讓 RAG 使用本地檢索兜底。
         if (properties.getEmbedding().getApiKey().isBlank() || text == null || text.isBlank()) {
             return List.of();
         }
@@ -47,7 +47,7 @@ public class OpenAiEmbeddingClient implements EmbeddingClient {
         JsonNode embedding = response == null
                 ? null
                 : response.path("data").path(0).path("embedding");
-        // 服务端响应异常时不抛给业务层，返回空结果交给 KnowledgeService 回退。
+        // 服務端響應異常時不拋給業務層，返回空結果交給 KnowledgeService 回退。
         if (embedding == null || !embedding.isArray()) {
             return List.of();
         }

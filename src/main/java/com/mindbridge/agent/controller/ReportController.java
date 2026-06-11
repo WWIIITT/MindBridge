@@ -16,9 +16,9 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/api")
 /**
- * 报告、Excel 记录、邮件记录和完整会话查询接口。
+ * 報告、Excel 記錄、郵件記錄和完整會話查詢接口。
  *
- * <p>管理员后台的数据列表和详情弹窗主要由这些接口驱动。</p>
+ * <p>管理員後臺的數據列表和詳情彈窗主要由這些接口驅動。</p>
  */
 public class ReportController {
 
@@ -37,7 +37,7 @@ public class ReportController {
 
     @GetMapping("/admin/reports")
     public List<ReportResponse> latestReports() {
-        // 管理员统计大屏使用这个接口作为对话报告主数据源。
+        // 管理員統計大屏使用這個接口作爲對話報告主數據源。
         return reportService.latestReports().stream()
                 .map(ReportResponse::from)
                 .toList();
@@ -55,7 +55,7 @@ public class ReportController {
 
     @GetMapping("/admin/conversations/{sessionId}")
     public ConversationResponse conversation(@PathVariable String sessionId) {
-        // 点开任一后台记录时读取完整会话，便于辅导员回看上下文。
+        // 點開任一後臺記錄時讀取完整會話，便於輔導員回看上下文。
         return reportService.conversation(sessionId);
     }
 }

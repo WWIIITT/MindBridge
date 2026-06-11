@@ -11,9 +11,9 @@ import org.springframework.web.reactive.function.client.WebClient;
 
 @Component
 /**
- * Chroma 向量库网关。
+ * Chroma 向量庫網關。
  *
- * <p>当 use-chroma=true 时，把知识库切块镜像到外部向量库，并优先从 Chroma 检索。</p>
+ * <p>當 use-chroma=true 時，把知識庫切塊鏡像到外部向量庫，並優先從 Chroma 檢索。</p>
  */
 public class ChromaGateway {
 
@@ -30,7 +30,7 @@ public class ChromaGateway {
         if (!properties.getKnowledge().isUseChroma()) {
             return;
         }
-        // 本地数据库仍是主存储；Chroma 只是可选检索加速层。
+        // 本地數據庫仍是主存儲；Chroma 只是可選檢索加速層。
         ensureCollection();
         Map<String, Object> body = Map.of(
                 "ids", List.of(String.valueOf(chunk.getId())),
@@ -67,7 +67,7 @@ public class ChromaGateway {
                     .block();
             return parseResults(response);
         } catch (Exception ignored) {
-            // 外部向量库不可用时返回空结果，让 KnowledgeService 回退到本地检索。
+            // 外部向量庫不可用時返回空結果，讓 KnowledgeService 回退到本地檢索。
             return List.of();
         }
     }

@@ -1,7 +1,7 @@
 package com.mindbridge.agent.dto;
 
 /**
- * 统一的简单提示响应体，用于异常或轻量接口返回文本消息。
+ * 統一的簡單提示響應體，用於異常或輕量接口返回文本消息。
  */
 public record ApiMessage(String message) {
 }

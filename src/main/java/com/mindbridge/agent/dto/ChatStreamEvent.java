@@ -8,7 +8,7 @@ import com.mindbridge.agent.domain.RiskLevel;
 /**
  * SSE 流式聊天事件。
  *
- * <p>meta 先返回会话 id，token 持续返回模型片段，done 表示本轮结束。</p>
+ * <p>meta 先返回會話 id，token 持續返回模型片段，done 表示本輪結束。</p>
  */
 public record ChatStreamEvent(
         String type,

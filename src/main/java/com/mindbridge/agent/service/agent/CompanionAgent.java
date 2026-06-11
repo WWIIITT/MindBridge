@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
 /**
  * 普通陪伴 Agent。
  *
- * <p>处理学习、生活、编程、校园事务等普通聊天，不生成后台心理报告。</p>
+ * <p>處理學習、生活、編程、校園事務等普通聊天，不生成後臺心理報告。</p>
  */
 @Component
 public class CompanionAgent implements MindBridgeAgent {
@@ -51,21 +51,21 @@ public class CompanionAgent implements MindBridgeAgent {
             String plan = aiClient.complete(List.of(
                     AiMessage.system("""
                             你是 MindBridge 的 CompanionAgent。
-                            你负责普通学习、生活、校园事务、编程和日常聊天。
-                            请根据当前输入和记忆摘要，制定一句简短回复策略。
-                            不要做心理评估，不要输出风险等级，不要替用户下诊断。
+                            你負責普通學習、生活、校園事務、編程和日常聊天。
+                            請根據當前輸入和記憶摘要，制定一句簡短回覆策略。
+                            不要做心理評估，不要輸出風險等級，不要替用戶下診斷。
                             """),
                     AiMessage.user("""
-                            记忆摘要：
+                            記憶摘要：
                             %s
 
-                            当前输入：
+                            當前輸入：
                             %s
                             """.formatted(context.memoryBrief(), context.modelInput()))
             )).trim();
-            return plan.isBlank() ? "围绕用户当前问题直接、自然地回答。" : shorten(plan, 300);
+            return plan.isBlank() ? "圍繞用戶當前問題直接、自然地回答。" : shorten(plan, 300);
         } catch (Exception ignored) {
-            return "围绕用户当前问题直接、自然地回答。";
+            return "圍繞用戶當前問題直接、自然地回答。";
         }
     }
 
@@ -77,11 +77,11 @@ public class CompanionAgent implements MindBridgeAgent {
                 "",
                 context.user().getDisplayName()));
         messages.add(AiMessage.system("""
-                当前由 CompanionAgent 负责回复。
-                记忆摘要：
+                當前由 CompanionAgent 負責回覆。
+                記憶摘要：
                 %s
 
-                回复策略：
+                回覆策略：
                 %s
                 """.formatted(context.memoryBrief(), plan)));
         messages.addAll(context.modelHistory());

@@ -1,9 +1,9 @@
 package com.mindbridge.agent.service.agent;
 
 /**
- * MindBridge 内部专业智能体名称。
+ * MindBridge 內部專業智能體名稱。
  *
- * <p>多智能体协作采用 Supervisor 统筹、专家 Agent 分工的方式，避免把所有职责继续堆在一个服务里。</p>
+ * <p>多智能體協作採用 Supervisor 統籌、專家 Agent 分工的方式，避免把所有職責繼續堆在一個服務裏。</p>
  */
 public enum AgentName {
     MEMORY_AGENT,

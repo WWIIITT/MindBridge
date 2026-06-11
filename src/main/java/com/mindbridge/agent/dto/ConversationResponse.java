@@ -6,7 +6,7 @@ import java.time.Instant;
 import java.util.List;
 
 /**
- * 管理员查看完整会话的响应体。
+ * 管理員查看完整會話的響應體。
  */
 public record ConversationResponse(
         String sessionId,

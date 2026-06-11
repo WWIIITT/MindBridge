@@ -9,9 +9,9 @@ import org.springframework.stereotype.Service;
 
 @Service
 /**
- * 管理员文件上传知识库服务。
+ * 管理員文件上傳知識庫服務。
  *
- * <p>负责文件大小校验、类型识别和文本抽取，抽取后的文本交给 KnowledgeService 处理。</p>
+ * <p>負責文件大小校驗、類型識別和文本抽取，抽取後的文本交給 KnowledgeService 處理。</p>
  */
 public class KnowledgeFileService {
 
@@ -24,17 +24,17 @@ public class KnowledgeFileService {
     }
 
     public int ingest(String filename, byte[] bytes) {
-        // 文件上传入口只负责校验和抽取文本，真正切块、向量化、落库交给 KnowledgeService。
+        // 文件上傳入口只負責校驗和抽取文本，真正切塊、向量化、落庫交給 KnowledgeService。
         if (bytes.length == 0) {
-            throw new IllegalArgumentException("文件内容为空");
+            throw new IllegalArgumentException("文件內容爲空");
         }
         if (bytes.length > MAX_FILE_BYTES) {
-            throw new IllegalArgumentException("文件不能超过 10MB");
+            throw new IllegalArgumentException("文件不能超過 10MB");
         }
         String source = sanitizeSource(filename);
         String text = extractText(source, bytes);
         if (text.isBlank()) {
-            throw new IllegalArgumentException("没有从文件中解析出可用文本");
+            throw new IllegalArgumentException("沒有從文件中解析出可用文本");
         }
         return knowledgeService.ingest(source, text);
     }
@@ -44,24 +44,24 @@ public class KnowledgeFileService {
         if (lower.endsWith(".pdf")) {
             return extractPdf(bytes);
         }
-        // Markdown 和 txt 都按 UTF-8 文本处理，适合管理员维护轻量知识库。
+        // Markdown 和 txt 都按 UTF-8 文本處理，適合管理員維護輕量知識庫。
         if (lower.endsWith(".md") || lower.endsWith(".markdown") || lower.endsWith(".txt")) {
             return new String(bytes, StandardCharsets.UTF_8);
         }
-        throw new IllegalArgumentException("仅支持 PDF、Markdown 和 txt 文件");
+        throw new IllegalArgumentException("僅支持 PDF、Markdown 和 txt 文件");
     }
 
     private String extractPdf(byte[] bytes) {
         try (PDDocument document = Loader.loadPDF(bytes)) {
             return new PDFTextStripper().getText(document);
         } catch (Exception exception) {
-            throw new IllegalArgumentException("PDF 文本解析失败：" + exception.getMessage());
+            throw new IllegalArgumentException("PDF 文本解析失敗：" + exception.getMessage());
         }
     }
 
     private String sanitizeSource(String filename) {
         String source = filename == null || filename.isBlank() ? "uploaded-knowledge" : filename.trim();
-        // source 会进入数据库和后台列表，去掉路径分隔符避免显示本地路径。
+        // source 會進入數據庫和後臺列表，去掉路徑分隔符避免顯示本地路徑。
         source = source.replaceAll("[\\\\/]+", "-");
         return source.length() > 180 ? source.substring(source.length() - 180) : source;
     }

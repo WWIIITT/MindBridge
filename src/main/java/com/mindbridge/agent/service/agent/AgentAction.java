@@ -1,7 +1,7 @@
 package com.mindbridge.agent.service.agent;
 
 /**
- * Agent loop 中每一步可执行的动作。
+ * Agent loop 中每一步可執行的動作。
  */
 public enum AgentAction {
     READ_MEMORY,

@@ -1,7 +1,7 @@
 package com.mindbridge.agent.dto;
 
 /**
- * 知识库入库结果，返回数据来源和切块数量。
+ * 知識庫入庫結果，返回數據來源和切塊數量。
  */
 public record KnowledgeIngestResponse(String source, int chunks) {
 }

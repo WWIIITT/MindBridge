@@ -6,14 +6,14 @@ import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
- * 会话的数据访问接口。
+ * 會話的數據訪問接口。
  */
 public interface ChatSessionRepository extends JpaRepository<ChatSession, Long> {
 
-    /** 学生继续对话时，必须校验会话属于当前用户。 */
+    /** 學生繼續對話時，必須校驗會話屬於當前用戶。 */
     Optional<ChatSession> findByPublicIdAndUser_Id(String publicId, Long userId);
 
-    /** 管理员查看会话详情时需要连同用户信息一起加载。 */
+    /** 管理員查看會話詳情時需要連同用戶信息一起加載。 */
     @EntityGraph(attributePaths = "user")
     Optional<ChatSession> findByPublicId(String publicId);
 }

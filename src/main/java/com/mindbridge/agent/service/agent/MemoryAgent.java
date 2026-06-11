@@ -15,9 +15,9 @@ import java.util.List;
 import org.springframework.stereotype.Component;
 
 /**
- * 记忆 Agent。
+ * 記憶 Agent。
  *
- * <p>优先读取 Redis 短期记忆；短期记忆过期时，从 MySQL 长期记忆恢复最近上下文。</p>
+ * <p>優先讀取 Redis 短期記憶；短期記憶過期時，從 MySQL 長期記憶恢復最近上下文。</p>
  */
 @Component
 public class MemoryAgent implements MindBridgeAgent {
@@ -99,27 +99,27 @@ public class MemoryAgent implements MindBridgeAgent {
 
     private String summarizeMemory(List<AiMessage> history, String currentInput) {
         if (history.isEmpty()) {
-            return "无相关历史记忆。";
+            return "無相關歷史記憶。";
         }
         try {
             String summary = aiClient.complete(List.of(
                     AiMessage.system("""
                             你是 MindBridge 的 MemoryAgent。
-                            你的任务是从最近对话中提取对当前输入有用的短期/长期记忆。
-                            只输出 1-3 条中文要点，不要输出风险等级、诊断结论或后台标签。
-                            如果历史与当前输入无关，只输出：无相关历史记忆。
+                            你的任務是從最近對話中提取對當前輸入有用的短期/長期記憶。
+                            只輸出 1-3 條中文要點，不要輸出風險等級、診斷結論或後臺標籤。
+                            如果歷史與當前輸入無關，只輸出：無相關歷史記憶。
                             """),
                     AiMessage.user("""
-                            当前输入：
+                            當前輸入：
                             %s
 
-                            最近历史：
+                            最近歷史：
                             %s
                             """.formatted(currentInput, formatHistory(history)))
             )).trim();
-            return summary.isBlank() ? "无相关历史记忆。" : shorten(summary, 400);
+            return summary.isBlank() ? "無相關歷史記憶。" : shorten(summary, 400);
         } catch (Exception ignored) {
-            return "无相关历史记忆。";
+            return "無相關歷史記憶。";
         }
     }
 

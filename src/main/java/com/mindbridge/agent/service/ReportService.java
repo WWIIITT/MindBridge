@@ -20,9 +20,9 @@ import org.springframework.web.server.ResponseStatusException;
 
 @Service
 /**
- * 管理员后台数据查询服务。
+ * 管理員後臺數據查詢服務。
  *
- * <p>封装报告列表、Excel 写入记录、预警记录和完整会话读取逻辑。</p>
+ * <p>封裝報告列表、Excel 寫入記錄、預警記錄和完整會話讀取邏輯。</p>
  */
 public class ReportService {
 
@@ -52,7 +52,7 @@ public class ReportService {
 
     @Transactional(readOnly = true)
     public List<PsychologicalReport> latestReports() {
-        // 管理员后台只展示学生对话产生的报告，避免管理员测试消息混入统计大屏。
+        // 管理員後臺只展示學生對話產生的報告，避免管理員測試消息混入統計大屏。
         return psychologicalReportRepository.findTop100ByOrderByCreatedAtDesc().stream()
                 .filter(ReportService::isStudentReport)
                 .toList();
@@ -80,7 +80,7 @@ public class ReportService {
     public ConversationResponse conversation(String sessionId) {
         ChatSession session = chatSessionRepository.findByPublicId(sessionId)
                 .orElseThrow(() -> new IllegalArgumentException("Conversation not found"));
-        // 管理员只能查看学生会话；非学生会话统一按不存在处理，减少后台数据误展示。
+        // 管理員只能查看學生會話；非學生會話統一按不存在處理，減少後臺數據誤展示。
         if (!isStudentUser(session.getUser())) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Conversation not found");
         }

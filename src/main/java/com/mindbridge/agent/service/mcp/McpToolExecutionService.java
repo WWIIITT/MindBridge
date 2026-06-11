@@ -109,20 +109,20 @@ public class McpToolExecutionService {
         SimpleMailMessage message = new SimpleMailMessage();
         message.setFrom(properties.getMcp().getEmail().getFrom());
         message.setTo(recipient);
-        message.setSubject("【高危心理预警】学生用户 %s 存在高风险信号".formatted(username));
+        message.setSubject("【高危心理預警】學生用戶 %s 存在高風險信號".formatted(username));
         message.setText("""
-                系统在对话中监测到 1 名学生出现高风险心理状态，请及时关注并干预。
+                系統在對話中監測到 1 名學生出現高風險心理狀態，請及時關注並幹預。
 
-                【预警信息如下】
-                报告ID：%s
-                用户ID：%s
-                学生：%s
-                对话内容：%s
-                情绪判定：%s
-                综合情绪得分：%.2f
-                风险等级：%s
-                判断摘要：%s
-                发送时间：%s
+                【預警信息如下】
+                報告ID：%s
+                用戶ID：%s
+                學生：%s
+                對話內容：%s
+                情緒判定：%s
+                綜合情緒得分：%.2f
+                風險等級：%s
+                判斷摘要：%s
+                發送時間：%s
 
                 """.formatted(
                 reportId,
@@ -149,8 +149,8 @@ public class McpToolExecutionService {
 
     private void writeHeader(Row row) {
         String[] headers = {
-                "报告ID", "用户ID", "账号", "会话ID", "意图", "情绪标签", "情绪总分",
-                "风险等级", "置信度", "判断摘要", "对话内容", "对话时间"
+                "報告ID", "用戶ID", "賬號", "會話ID", "意圖", "情緒標籤", "情緒總分",
+                "風險等級", "置信度", "判斷摘要", "對話內容", "對話時間"
         };
         for (int i = 0; i < headers.length; i++) {
             cell(row, i).setCellValue(headers[i]);

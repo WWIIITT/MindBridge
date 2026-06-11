@@ -17,8 +17,8 @@ import org.springframework.security.config.web.server.ServerHttpSecurity;
 /**
  * WebFlux 安全配置。
  *
- * <p>项目使用 HTTP Basic 简化演示登录；管理员接口要求 ADMIN 角色，
- * 普通 API 要求已登录用户。</p>
+ * <p>項目使用 HTTP Basic 簡化演示登錄；管理員接口要求 ADMIN 角色，
+ * 普通 API 要求已登錄用戶。</p>
  */
 public class SecurityConfig {
 

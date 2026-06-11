@@ -7,7 +7,7 @@ import java.util.Map;
 import org.springframework.web.reactive.function.client.WebClient;
 
 /**
- * 通过 HTTP MCP 服务写入 Excel 记录。
+ * 通過 HTTP MCP 服務寫入 Excel 記錄。
  */
 public class HttpExcelReportWriter implements ExcelReportWriter {
 

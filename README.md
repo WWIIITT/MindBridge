@@ -1,37 +1,37 @@
 # MindBridge Agent
 
-MindBridge 是一个校园心理健康智能体
+MindBridge 是一個校園心理健康智能體
 
-- 动态路由 RAG：先识别 `CHAT / CONSULT / RISK`，闲聊不查知识库，咨询与风险消息才进入检索增强。
-- SSE 流式输出：`/api/chat/stream` 返回 `text/event-stream`，适合前端做打字机效果。
-- 后台心理状态识别：记录情绪标签、情绪分数、风险等级和置信度，但学生端不展示评估结果。
-- 数据闭环：咨询/风险消息写入数据库，高风险先写 Excel，再触发邮件或 HTTP MCP 预警。
-- Spring AI 模型接入：默认通过 `ollama` 调用项目模型，也可切到 `openai`；`mock` 只作为无模型离线演示。
-- 可替换知识库：默认本地轻量检索，可打开 Chroma 镜像和查询。
-- 多 Agent loop：每轮输入由 MemoryAgent、SupervisorAgent、KnowledgeAgent、RiskGuardianAgent 和回复 Agent 协作完成；多个 Agent 共享项目微调模型，但使用不同 prompt 和工具权限。
+- 動態路由 RAG：先識別 `CHAT / CONSULT / RISK`，閒聊不查知識庫，諮詢與風險消息才進入檢索增強。
+- SSE 流式輸出：`/api/chat/stream` 返回 `text/event-stream`，適合前端做打字機效果。
+- 後臺心理狀態識別：記錄情緒標籤、情緒分數、風險等級和置信度，但學生端不展示評估結果。
+- 數據閉環：諮詢/風險消息寫入數據庫，高風險先寫 Excel，再觸發郵件或 HTTP MCP 預警。
+- Spring AI 模型接入：默認通過 `ollama` 調用項目模型，也可切到 `openai`；`mock` 只作爲無模型離線演示。
+- 可替換知識庫：默認本地輕量檢索，可打開 Chroma 鏡像和查詢。
+- 多 Agent loop：每輪輸入由 MemoryAgent、SupervisorAgent、KnowledgeAgent、RiskGuardianAgent 和回覆 Agent 協作完成；多個 Agent 共享項目微調模型，但使用不同 prompt 和工具權限。
 
-大模型 LoRA 微调、合并、GGUF 转换和 Ollama 接入流程见：[docs/qwen25-7b-lora-finetune-guide.md](docs/qwen25-7b-lora-finetune-guide.md)。
+大模型 LoRA 微調、合併、GGUF 轉換和 Ollama 接入流程見：[docs/qwen25-7b-lora-finetune-guide.md](docs/qwen25-7b-lora-finetune-guide.md)。
 
-## 目录
+## 目錄
 
 ```text
 src/main/java/com/mindbridge/agent
 ├── config                 # 配置、安全、AI/MCP Bean
 ├── controller             # Chat / Knowledge / Report API
-├── domain                 # JPA 实体与枚举
-├── dto                    # 请求与响应对象
+├── domain                 # JPA 實體與枚舉
+├── dto                    # 請求與響應對象
 ├── repository             # Spring Data JPA
-├── security               # 当前用户与认证查询
+├── security               # 當前用戶與認證查詢
 └── service
-    ├── ai                 # Spring AI 模型适配器、mock 客户端与 Prompt
-    ├── agent              # 多 Agent loop：记忆、路由、知识检索、风险守护与回复规划
-    ├── knowledge          # 切块、检索、Chroma 网关
-    └── mcp                # Excel 与邮件/HTTP 预警工具
+    ├── ai                 # Spring AI 模型適配器、mock 客戶端與 Prompt
+    ├── agent              # 多 Agent loop：記憶、路由、知識檢索、風險守護與回覆規劃
+    ├── knowledge          # 切塊、檢索、Chroma 網關
+    └── mcp                # Excel 與郵件/HTTP 預警工具
 ```
 
-## Agent loop 与多 Agent 分工
+## Agent loop 與多 Agent 分工
 
-每轮对话进入一个有限步 agent loop，最多执行 8 步，防止心理安全场景中出现无限自主循环：
+每輪對話進入一個有限步 agent loop，最多執行 8 步，防止心理安全場景中出現無限自主循環：
 
 ```text
 MemoryAgent
@@ -43,18 +43,18 @@ MemoryAgent
 
 各 Agent 分工：
 
-- `MemoryAgent`：读取 Redis 短期记忆；Redis 为空时从 MySQL 长期记忆恢复，并调用模型生成本轮记忆摘要。
-- `SupervisorAgent`：调用模型判断 `CHAT / CONSULT / RISK`，决定后续交给普通陪伴还是心理支持链路。
-- `KnowledgeAgent`：调用模型改写 Chroma/RAG 检索 query，并判断检索结果是否足够，不足时二次检索。
-- `RiskGuardianAgent`：调用模型做后台心理状态评估，同时保留高风险词库硬兜底。
-- `CompanionAgent`：调用模型生成普通聊天回复策略，并组装普通助手回复 prompt。
-- `CounselorAgent`：调用模型生成心理支持回复策略，并结合记忆、RAG、风险守护结果组装回复 prompt。
+- `MemoryAgent`：讀取 Redis 短期記憶；Redis 爲空時從 MySQL 長期記憶恢復，並調用模型生成本輪記憶摘要。
+- `SupervisorAgent`：調用模型判斷 `CHAT / CONSULT / RISK`，決定後續交給普通陪伴還是心理支持鏈路。
+- `KnowledgeAgent`：調用模型改寫 Chroma/RAG 檢索 query，並判斷檢索結果是否足夠，不足時二次檢索。
+- `RiskGuardianAgent`：調用模型做後臺心理狀態評估，同時保留高風險詞庫硬兜底。
+- `CompanionAgent`：調用模型生成普通聊天回覆策略，並組裝普通助手回覆 prompt。
+- `CounselorAgent`：調用模型生成心理支持回覆策略，並結合記憶、RAG、風險守護結果組裝回復 prompt。
 
-最终回复仍通过 Spring AI 流式调用项目模型输出给学生端；后台风险报告、Excel 和预警工具链仍按安全规则执行。
+最終回覆仍通過 Spring AI 流式調用項目模型輸出給學生端；後颱風險報告、Excel 和預警工具鏈仍按安全規則執行。
 
-## 快速启动
+## 快速啓動
 
-运行环境要求：
+運行環境要求：
 
 - JDK 17
 - Maven 3.9+
@@ -94,36 +94,36 @@ cd /mnt/d/GitHub/MindBridge
 `run-dev.sh` starts the app in Ollama mode, so it requires Ollama and the
 configured local model. Use mock mode first if you only want to confirm that
 the server starts.
-- Ollama（使用本地模型时需要）
+- Ollama（使用本地模型時需要）
 
-最省事的方式是直接运行：
+最省事的方式是直接運行：
 
 ```bash
 cd MindBridge
 ./scripts/run-dev.sh
 ```
 
-启动后打开：
+啓動後打開：
 
 ```text
 http://localhost:8080
 ```
 
-如果想手动分两步启动，先在一个终端启动 Ollama：
+如果想手動分兩步啓動，先在一個終端啓動 Ollama：
 
 ```bash
 cd MindBridge
 ./scripts/start-ollama.sh
 ```
 
-再在另一个终端运行项目：
+再在另一個終端運行項目：
 
 ```bash
 cd MindBridge
 mvn -Dmaven.repo.local=.m2/repository spring-boot:run
 ```
 
-也可以先打包，再运行 jar：
+也可以先打包，再運行 jar：
 
 ```bash
 cd MindBridge
@@ -131,83 +131,83 @@ mvn -Dmaven.repo.local=.m2/repository package
 java -jar target/mindbridge-agent-0.1.0.jar --server.address=127.0.0.1 --server.port=8080
 ```
 
-默认使用 H2 文件数据库、Ollama 大模型、本地 Excel 文件和日志预警。页面左上角会显示当前模型模式；如果本机没有启动 Ollama，聊天接口会提示模型连接失败。首次启动会创建两个账号：
+默認使用 H2 文件數據庫、Ollama 大模型、本地 Excel 文件和日誌預警。頁面左上角會顯示當前模型模式；如果本機沒有啓動 Ollama，聊天接口會提示模型連接失敗。首次啓動會創建兩個賬號：
 
 ```text
 admin / admin123
 student / student123
 ```
 
-## 调用示例
+## 調用示例
 
 ```bash
 curl -N -u student:student123 \
   -H 'Content-Type: application/json' \
-  -d '{"message":"我最近很焦虑，晚上总是睡不着"}' \
+  -d '{"message":"我最近很焦慮，晚上總是睡不着"}' \
   http://localhost:8080/api/chat/stream
 ```
 
-高风险示例会触发报告、Excel 写入和预警：
+高風險示例會觸發報告、Excel 寫入和預警：
 
 ```bash
 curl -N -u student:student123 \
   -H 'Content-Type: application/json' \
-  -d '{"message":"我不想活了，感觉撑不下去了"}' \
+  -d '{"message":"我不想活了，感覺撐不下去了"}' \
   http://localhost:8080/api/chat/stream
 ```
 
-管理员查看后台报告：
+管理員查看後臺報告：
 
 ```bash
 curl -u admin:admin123 http://localhost:8080/api/admin/reports
 ```
 
-查看当前是否接入真实大模型：
+查看當前是否接入真實大模型：
 
 ```bash
 curl -u student:student123 http://localhost:8080/api/agent/status
 ```
 
-管理员追加知识库：
+管理員追加知識庫：
 
 ```bash
 curl -u admin:admin123 \
   -H 'Content-Type: application/json' \
-  -d '{"source":"sleep-guide","content":"失眠时可先固定起床时间，减少睡前屏幕刺激，必要时联系校心理中心。"}' \
+  -d '{"source":"sleep-guide","content":"失眠時可先固定起牀時間，減少睡前屏幕刺激，必要時聯繫校心理中心。"}' \
   http://localhost:8080/api/admin/knowledge
 ```
 
 ## 接入 Ollama / LoRA 模型
 
-默认模型配置就是本地 Ollama 路线，模型名为：
+默認模型配置就是本地 Ollama 路線，模型名爲：
 
 ```text
 mindbridge-qwen2.5-7b-ft:latest
 ```
 
-本地模型由这个 GGUF 权重创建：
+本地模型由這個 GGUF 權重創建：
 
 ```text
 models/mindbridge-qwen2.5-7b-ft/mindbridge-qwen2.5-7b-ft-q4_k_m.gguf
 ```
 
-首次运行或重新导入模型时执行：
+首次運行或重新導入模型時執行：
 
 ```bash
 cd MindBridge
 ./scripts/create-finetuned-model.sh
 ```
 
-之后直接启动项目：
+之後直接啓動項目：
 
 ```bash
 cd MindBridge
 ./scripts/run-dev.sh
 ```
 
-如果终端提示 `ollama: command not found`，说明只是命令链接没建好；本项目脚本会直接调用 `/Applications/Ollama.app/Contents/Resources/ollama`。
+如果終端提示 `ollama: command not found`，說明只是命令鏈接沒建好；本項目腳本會直接調用 `/Applications/Ollama.app/Contents/Resources/ollama`。
 
-没有本地模型、只想离线演示完整业务流程时，才使用 mock：
+沒有本地模型、只想離線演示完整業務流程時，才使用 mock：
 
 ```bash
 cd MindBridge
@@ -215,7 +215,7 @@ AI_PROVIDER=mock \
 mvn -Dmaven.repo.local=.m2/repository spring-boot:run
 ```
 
-也可以不用脚本，手动指定本地模型启动：
+也可以不用腳本，手動指定本地模型啓動：
 
 ```bash
 cd MindBridge
@@ -226,30 +226,30 @@ JAVA_HOME="$PWD/.tools/amazon-corretto-17.jdk/Contents/Home" \
   .tools/apache-maven-3.9.9/bin/mvn -Dmaven.repo.local=.m2/repository spring-boot:run
 ```
 
-## 打包给别人运行
+## 打包給別人運行
 
-模型文件较大，建议单独压缩发送：
+模型文件較大，建議單獨壓縮發送：
 
 ```text
 models/mindbridge-qwen2.5-7b-ft/mindbridge-qwen2.5-7b-ft-q4_k_m.gguf
 ```
 
-生成不含模型权重的应用发布包：
+生成不含模型權重的應用發佈包：
 
 ```bash
 cd MindBridge
 ./scripts/package-release.sh
 ```
 
-脚本会在 `dist/` 下生成 `MindBridge-app-时间戳.tar.gz`。发布包包含源码、Dockerfile、docker-compose、脚本、文档、`models/mindbridge-qwen2.5-7b-ft/Modelfile` 和 `data/lora/psychqa_synthetic.jsonl` 数据集；会排除模型权重、模型 zip、训练数据生成脚本、运行数据库、Excel 输出、日志、PDF 文档、`target/`、`.m2/`、`.tools/`、IDE 配置等本机产物。
+腳本會在 `dist/` 下生成 `MindBridge-app-時間戳.tar.gz`。發佈包包含源碼、Dockerfile、docker-compose、腳本、文檔、`models/mindbridge-qwen2.5-7b-ft/Modelfile` 和 `data/lora/psychqa_synthetic.jsonl` 數據集；會排除模型權重、模型 zip、訓練數據生成腳本、運行數據庫、Excel 輸出、日誌、PDF 文檔、`target/`、`.m2/`、`.tools/`、IDE 配置等本機產物。
 
-收到项目的人需要把模型 zip 解压到：
+收到項目的人需要把模型 zip 解壓到：
 
 ```text
 MindBridge/models/mindbridge-qwen2.5-7b-ft/
 ```
 
-然后执行：
+然後執行：
 
 ```bash
 cd MindBridge
@@ -257,7 +257,7 @@ cd MindBridge
 ./scripts/run-dev.sh
 ```
 
-如果用 Docker 部署数据库、Redis、Chroma、Mailpit：
+如果用 Docker 部署數據庫、Redis、Chroma、Mailpit：
 
 ```bash
 docker compose up -d mysql redis chroma mailpit
@@ -265,7 +265,7 @@ docker compose up -d mysql redis chroma mailpit
 ./scripts/run-dev.sh
 ```
 
-如果不是 macOS，或 Ollama/JDK/Maven 不在默认路径，需要先安装 Ollama、JDK 17、Maven，并按实际路径设置 `OLLAMA_BIN`、`JAVA_HOME`、`MAVEN_BIN`。
+如果不是 macOS，或 Ollama/JDK/Maven 不在默認路徑，需要先安裝 Ollama、JDK 17、Maven，並按實際路徑設置 `OLLAMA_BIN`、`JAVA_HOME`、`MAVEN_BIN`。
 
 ## 接入 OpenAI
 
@@ -280,7 +280,7 @@ JAVA_HOME="$PWD/.tools/amazon-corretto-17.jdk/Contents/Home" \
 
 ## 使用 MySQL、Chroma、SMTP
 
-启动依赖：
+啓動依賴：
 
 ```bash
 docker compose up -d mysql redis chroma mailpit
@@ -296,42 +296,42 @@ ALERT_MAIL_RECIPIENTS=counselor@example.com \
 mvn spring-boot:run -Dspring-boot.run.profiles=mysql
 ```
 
-Mailpit 管理页面：`http://localhost:8025`
+Mailpit 管理頁面：`http://localhost:8025`
 
 ## MCP 工具模式
 
 Excel 工具：
 
-- `MCP_EXCEL_MODE=local`：默认写入 `./data/mindbridge-reports.xlsx`
-- `MCP_EXCEL_MODE=http`：调用 `MCP_EXCEL_URL/write`
-- `MCP_EXCEL_MODE=mcp`：通过标准 Model Context Protocol Client 调用 MCP Server 暴露的 `mindbridge_write_excel_report` 工具
+- `MCP_EXCEL_MODE=local`：默認寫入 `./data/mindbridge-reports.xlsx`
+- `MCP_EXCEL_MODE=http`：調用 `MCP_EXCEL_URL/write`
+- `MCP_EXCEL_MODE=mcp`：通過標準 Model Context Protocol Client 調用 MCP Server 暴露的 `mindbridge_write_excel_report` 工具
 
-邮件工具：
+郵件工具：
 
-- `MCP_EMAIL_MODE=log`：默认只记录日志，便于本地演示
-- `MCP_EMAIL_MODE=smtp`：使用 Spring Mail 发送
-- `MCP_EMAIL_MODE=http`：调用 `MCP_EMAIL_URL/send`
-- `MCP_EMAIL_MODE=mcp`：通过标准 Model Context Protocol Client 调用 MCP Server 暴露的 `mindbridge_send_risk_alert` 工具
+- `MCP_EMAIL_MODE=log`：默認只記錄日誌，便於本地演示
+- `MCP_EMAIL_MODE=smtp`：使用 Spring Mail 發送
+- `MCP_EMAIL_MODE=http`：調用 `MCP_EMAIL_URL/send`
+- `MCP_EMAIL_MODE=mcp`：通過標準 Model Context Protocol Client 調用 MCP Server 暴露的 `mindbridge_send_risk_alert` 工具
 
-标准 MCP：
+標準 MCP：
 
-- `MCP_SERVER_ENABLED=true`：启用 Spring AI MCP WebFlux Server，默认 SSE 端点为 `/sse`，消息端点为 `/mcp/messages`
-- `MCP_CLIENT_ENABLED=true`：启用 Spring AI MCP WebFlux Client，默认连接 `MCP_SERVER_URL`
-- `MCP_EMAIL_SERVER_DELIVERY_MODE=log|smtp`：MCP Server 收到邮件工具调用后的实际投递方式
+- `MCP_SERVER_ENABLED=true`：啓用 Spring AI MCP WebFlux Server，默認 SSE 端點爲 `/sse`，消息端點爲 `/mcp/messages`
+- `MCP_CLIENT_ENABLED=true`：啓用 Spring AI MCP WebFlux Client，默認連接 `MCP_SERVER_URL`
+- `MCP_EMAIL_SERVER_DELIVERY_MODE=log|smtp`：MCP Server 收到郵件工具調用後的實際投遞方式
 
-高风险链路按文档实现为：写入报告 -> 写入 Excel -> Excel 成功后发送预警 -> 更新状态。
+高風險鏈路按文檔實現爲：寫入報告 -> 寫入 Excel -> Excel 成功後發送預警 -> 更新狀態。
 
-## RAG 评测指标
+## RAG 評測指標
 
-项目内置 RAG 检索评测模块，可基于标注评测集统计：
+項目內置 RAG 檢索評測模塊，可基於標註評測集統計：
 
-- `Recall@K`：相关知识是否出现在 TopK 检索结果中
-- `Precision@K`：TopK 返回片段中相关片段占比
-- `MRR`：第一个相关片段的平均倒数排名
-- `nDCG@K`：考虑排序位置的归一化检索质量
-- `Hit Rate`：至少命中一个相关片段的问题占比
+- `Recall@K`：相關知識是否出現在 TopK 檢索結果中
+- `Precision@K`：TopK 返回片段中相關片段佔比
+- `MRR`：第一個相關片段的平均倒數排名
+- `nDCG@K`：考慮排序位置的歸一化檢索質量
+- `Hit Rate`：至少命中一個相關片段的問題佔比
 
-运行评测：
+運行評測：
 
 ```bash
 AI_PROVIDER=mock \
@@ -341,12 +341,12 @@ RAG_EVAL_EXIT_AFTER_RUN=true \
 mvn spring-boot:run
 ```
 
-默认评测集：`src/main/resources/rag-eval/mindbridge-rag-eval.json`
+默認評測集：`src/main/resources/rag-eval/mindbridge-rag-eval.json`
 
-默认输出报告：`target/rag-eval-report.json`
+默認輸出報告：`target/rag-eval-report.json`
 
-评测集中的每条样本包含：
+評測集中的每條樣本包含：
 
-- `question`：待检索问题
-- `expectedSources`：应该命中的知识库来源文件
-- `expectedTerms`：可辅助判定相关性的关键词
+- `question`：待檢索問題
+- `expectedSources`：應該命中的知識庫來源文件
+- `expectedTerms`：可輔助判定相關性的關鍵詞

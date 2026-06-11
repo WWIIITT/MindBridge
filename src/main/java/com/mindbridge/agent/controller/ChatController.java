@@ -19,9 +19,9 @@ import reactor.core.publisher.Flux;
 @RestController
 @RequestMapping("/api/chat")
 /**
- * 学生聊天接口。
+ * 學生聊天接口。
  *
- * <p>只允许学生账号发起对话，返回 SSE 流式事件供前端逐字显示。</p>
+ * <p>只允許學生賬號發起對話，返回 SSE 流式事件供前端逐字顯示。</p>
  */
 public class ChatController {
 
@@ -36,11 +36,11 @@ public class ChatController {
             @AuthenticationPrincipal CurrentUser currentUser,
             @Valid @RequestBody ChatRequest request
     ) {
-        // 管理员后台只用于查看记录和工具状态，不能以管理员身份生成学生对话。
+        // 管理員後臺只用於查看記錄和工具狀態，不能以管理員身份生成學生對話。
         boolean isAdmin = currentUser.getAuthorities().stream()
                 .anyMatch(authority -> "ROLE_ADMIN".equals(authority.getAuthority()));
         if (isAdmin) {
-            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "管理员账号只能查看后台记录，不能发起学生对话。");
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "管理員賬號只能查看後臺記錄，不能發起學生對話。");
         }
         return chatService.streamChat(currentUser.getId(), request);
     }

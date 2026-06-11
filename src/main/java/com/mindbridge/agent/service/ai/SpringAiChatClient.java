@@ -12,9 +12,9 @@ import org.springframework.ai.chat.prompt.Prompt;
 import reactor.core.publisher.Flux;
 
 /**
- * 基于 Spring AI 的聊天模型适配器。
+ * 基於 Spring AI 的聊天模型適配器。
  *
- * <p>项目内部继续使用简洁的 {@link AiClient} 接口；真正的大模型调用由
+ * <p>項目內部繼續使用簡潔的 {@link AiClient} 接口；真正的大模型調用由
  * Spring AI 的 ChatModel / StreamingChatModel 完成。</p>
  */
 public class SpringAiChatClient implements AiClient {

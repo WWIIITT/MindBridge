@@ -9,9 +9,9 @@ import org.springframework.util.StreamUtils;
 
 @Service
 /**
- * 内置知识库初始化服务。
+ * 內置知識庫初始化服務。
  *
- * <p>首次启动且数据库没有知识切块时，自动读取 classpath:knowledge 下的默认文档。</p>
+ * <p>首次啓動且數據庫沒有知識切塊時，自動讀取 classpath:knowledge 下的默認文檔。</p>
  */
 public class KnowledgeIngestionService {
 
@@ -28,7 +28,7 @@ public class KnowledgeIngestionService {
             return;
         }
         try {
-            // classpath*: 支持未来从多个 jar 或目录中合并加载知识文件。
+            // classpath*: 支持未來從多個 jar 或目錄中合併加載知識文件。
             PathMatchingResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();
             Resource[] resources = resolver.getResources("classpath*:knowledge/*.*");
             for (Resource resource : resources) {

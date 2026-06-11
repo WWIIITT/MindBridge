@@ -8,9 +8,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 /**
- * 静态首页入口。
+ * 靜態首頁入口。
  *
- * <p>直接访问根路径时返回前端页面，方便本地演示不用单独启动前端服务。</p>
+ * <p>直接訪問根路徑時返回前端頁面，方便本地演示不用單獨啓動前端服務。</p>
  */
 public class HomeController {
 

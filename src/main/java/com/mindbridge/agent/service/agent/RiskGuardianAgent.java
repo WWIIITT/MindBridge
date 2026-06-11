@@ -7,9 +7,9 @@ import com.mindbridge.agent.service.PsychologyAssessment;
 import org.springframework.stereotype.Component;
 
 /**
- * 风险守护 Agent。
+ * 風險守護 Agent。
  *
- * <p>负责后台心理状态评估和高风险硬兜底；安全判断不能完全交给自由生成模型。</p>
+ * <p>負責後臺心理狀態評估和高風險硬兜底；安全判斷不能完全交給自由生成模型。</p>
  */
 @Component
 public class RiskGuardianAgent implements MindBridgeAgent {

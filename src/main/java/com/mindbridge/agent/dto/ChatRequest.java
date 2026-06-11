@@ -4,10 +4,10 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
 /**
- * 学生发起聊天请求。
+ * 學生髮起聊天請求。
  *
- * @param sessionId 为空时创建新会话；非空时继续已有会话
- * @param message 学生本轮输入
+ * @param sessionId 爲空時創建新會話；非空時繼續已有會話
+ * @param message 學生本輪輸入
  */
 public record ChatRequest(
         String sessionId,

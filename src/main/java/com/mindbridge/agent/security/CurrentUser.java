@@ -9,9 +9,9 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 /**
- * Spring Security 使用的当前用户对象。
+ * Spring Security 使用的當前用戶對象。
  *
- * <p>在 UserDetails 中保留数据库用户 id 和显示名，业务接口可直接拿到当前账号信息。</p>
+ * <p>在 UserDetails 中保留數據庫用戶 id 和顯示名，業務接口可直接拿到當前賬號信息。</p>
  */
 public class CurrentUser implements UserDetails {
 

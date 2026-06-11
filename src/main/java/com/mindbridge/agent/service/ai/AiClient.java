@@ -4,9 +4,9 @@ import java.util.List;
 import reactor.core.publisher.Flux;
 
 /**
- * 模型调用统一接口。
+ * 模型調用統一接口。
  *
- * <p>业务层通过 complete 做分类/评估，通过 stream 做学生端流式回答。</p>
+ * <p>業務層通過 complete 做分類/評估，通過 stream 做學生端流式回答。</p>
  */
 public interface AiClient {
 

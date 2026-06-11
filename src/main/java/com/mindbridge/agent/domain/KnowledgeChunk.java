@@ -12,9 +12,9 @@ import java.time.Instant;
 @Entity
 @Table(name = "knowledge_chunks")
 /**
- * 知识库切块。
+ * 知識庫切塊。
  *
- * <p>每个上传文件会被拆成多个 chunk；sourceIndex 用于恢复相邻上下文。</p>
+ * <p>每個上傳文件會被拆成多個 chunk；sourceIndex 用於恢復相鄰上下文。</p>
  */
 public class KnowledgeChunk {
 

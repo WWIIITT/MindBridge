@@ -1,9 +1,9 @@
 package com.mindbridge.agent.service.agent;
 
 /**
- * MindBridge 专业 Agent 接口。
+ * MindBridge 專業 Agent 接口。
  *
- * <p>每个 Agent 只负责一个清晰职责，由 AgentRuntimeService 按上下文状态循环选择下一步。</p>
+ * <p>每個 Agent 只負責一個清晰職責，由 AgentRuntimeService 按上下文狀態循環選擇下一步。</p>
  */
 public interface MindBridgeAgent {
 

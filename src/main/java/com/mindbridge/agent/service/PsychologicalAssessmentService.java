@@ -13,9 +13,9 @@ import org.springframework.stereotype.Service;
 
 @Service
 /**
- * 后台心理状态评估服务。
+ * 後臺心理狀態評估服務。
  *
- * <p>结合高风险词库、模型结构化输出和关键词兜底，生成报告所需的情绪与风险字段。</p>
+ * <p>結合高風險詞庫、模型結構化輸出和關鍵詞兜底，生成報告所需的情緒與風險字段。</p>
  */
 public class PsychologicalAssessmentService {
 
@@ -32,7 +32,7 @@ public class PsychologicalAssessmentService {
     }
 
     public PsychologyAssessment assess(String input, List<AiMessage> history) {
-        // 高风险词库是硬规则，优先于模型判断，保证明显自伤/伤人信号不会被漏掉。
+        // 高風險詞庫是硬規則，優先於模型判斷，保證明顯自傷/傷人信號不會被漏掉。
         if (RiskLexicon.hasHighRiskSignal(input.toLowerCase())) {
             return new PsychologyAssessment(
                     EmotionLabel.HIGH_RISK,
@@ -45,14 +45,14 @@ public class PsychologicalAssessmentService {
             String raw = aiClient.complete(PromptTemplates.psychologyPrompt(history, input));
             return normalize(parseJson(raw));
         } catch (Exception ignored) {
-            // 模型输出格式异常或调用失败时，使用关键词兜底，保证报告链路仍可运行。
+            // 模型輸出格式異常或調用失敗時，使用關鍵詞兜底，保證報告鏈路仍可運行。
             return heuristic(input);
         }
     }
 
     private PsychologyAssessment parseJson(String raw) throws Exception {
         String json = raw.trim();
-        // 兼容模型在 JSON 前后额外输出少量文本的情况，只截取最外层 JSON 对象。
+        // 兼容模型在 JSON 前後額外輸出少量文本的情況，只截取最外層 JSON 對象。
         int start = json.indexOf('{');
         int end = json.lastIndexOf('}');
         if (start >= 0 && end > start) {
@@ -68,7 +68,7 @@ public class PsychologicalAssessmentService {
     }
 
     private PsychologyAssessment normalize(PsychologyAssessment assessment) {
-        // 风险等级取模型等级和分数推导等级中更高的一方，降低低估风险的概率。
+        // 風險等級取模型等級和分數推導等級中更高的一方，降低低估風險的概率。
         RiskLevel scoreRisk = riskFromScore(assessment.emotionScore());
         RiskLevel risk = assessment.risk().ordinal() > scoreRisk.ordinal() ? assessment.risk() : scoreRisk;
         if (assessment.emotion() == EmotionLabel.HIGH_RISK) {
@@ -83,11 +83,11 @@ public class PsychologicalAssessmentService {
     }
 
     private PsychologyAssessment heuristic(String input) {
-        String normalized = input.toLowerCase();
-        if (containsAny(normalized, "抑郁", "低落", "压抑", "崩溃", "难过", "depress", "hopeless")) {
+        String normalized = RiskLexicon.normalizeChineseForMatching(input.toLowerCase());
+        if (containsAny(normalized, "抑鬱", "低落", "壓抑", "崩潰", "難過", "depress", "hopeless")) {
             return new PsychologyAssessment(EmotionLabel.DEPRESSED, 3.1, RiskLevel.MEDIUM, 0.75, "Low mood keywords detected.");
         }
-        if (containsAny(normalized, "焦虑", "压力", "睡不着", "失眠", "anxious", "stress", "insomnia")) {
+        if (containsAny(normalized, "焦慮", "壓力", "睡不着", "失眠", "anxious", "stress", "insomnia")) {
             return new PsychologyAssessment(EmotionLabel.ANXIETY, 2.2, RiskLevel.LOW, 0.72, "Anxiety or pressure keywords detected.");
         }
         return new PsychologyAssessment(EmotionLabel.NORMAL, 0.0, RiskLevel.LOW, 0.66, "No obvious risk signal.");

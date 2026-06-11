@@ -4,9 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * 知识库文本切块器。
+ * 知識庫文本切塊器。
  *
- * <p>优先在换行、句号和英文标点附近切分，减少单个片段语义被截断。</p>
+ * <p>優先在換行、句號和英文標點附近切分，減少單個片段語義被截斷。</p>
  */
 public class KnowledgeChunker {
 
@@ -22,7 +22,7 @@ public class KnowledgeChunker {
         while (index < text.length()) {
             int end = Math.min(text.length(), index + safeSize);
             if (end < text.length()) {
-                // 尽量在自然边界切开，找不到合适边界时才按固定长度切。
+                // 儘量在自然邊界切開，找不到合適邊界時才按固定長度切。
                 int boundary = Math.max(
                         Math.max(text.lastIndexOf("\n", end), text.lastIndexOf("。", end)),
                         Math.max(text.lastIndexOf(".", end), text.lastIndexOf("?", end)));

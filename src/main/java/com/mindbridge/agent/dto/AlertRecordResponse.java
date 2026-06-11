@@ -6,7 +6,7 @@ import com.mindbridge.agent.domain.ToolStatus;
 import java.time.Instant;
 
 /**
- * 管理员后台邮件/预警记录响应。
+ * 管理員後臺郵件/預警記錄響應。
  */
 public record AlertRecordResponse(
         Long id,

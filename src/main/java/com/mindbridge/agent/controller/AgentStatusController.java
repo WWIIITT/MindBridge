@@ -9,9 +9,9 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/api/agent")
 /**
- * 智能体运行状态接口。
+ * 智能體運行狀態接口。
  *
- * <p>前端用它展示当前 provider、项目模型名称、RAG 参数和模型连接模式。</p>
+ * <p>前端用它展示當前 provider、項目模型名稱、RAG 參數和模型連接模式。</p>
  */
 public class AgentStatusController {
 
@@ -23,7 +23,7 @@ public class AgentStatusController {
 
     @GetMapping("/status")
     public AgentStatusResponse status() {
-        // realModelEnabled 只表示当前使用真实模型客户端，不代表业务评估一定会展示给学生。
+        // realModelEnabled 只表示當前使用真實模型客戶端，不代表業務評估一定會展示給學生。
         String provider = properties.getAi().getProvider().toLowerCase(Locale.ROOT);
         boolean realModelEnabled = "ollama".equals(provider) || "openai".equals(provider);
         return new AgentStatusResponse(
@@ -32,7 +32,7 @@ public class AgentStatusController {
                 realModelEnabled,
                 properties.getKnowledge().isUseChroma(),
                 properties.getKnowledge().getTopK(),
-                realModelEnabled ? "正在使用真实大模型客户端。" : "当前为本地 mock 演示模式，不会调用大模型。"
+                realModelEnabled ? "正在使用真實大模型客戶端。" : "當前爲本地 mock 演示模式，不會調用大模型。"
         );
     }
 
@@ -47,7 +47,7 @@ public class AgentStatusController {
     }
 
     /**
-     * 前端状态栏需要的最小状态信息。
+     * 前端狀態欄需要的最小狀態信息。
      */
     public record AgentStatusResponse(
             String provider,

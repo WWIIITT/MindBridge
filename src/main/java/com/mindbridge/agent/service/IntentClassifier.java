@@ -11,16 +11,16 @@ import org.springframework.stereotype.Service;
 
 @Service
 /**
- * 用户意图分类服务。
+ * 用戶意圖分類服務。
  *
- * <p>把每轮输入路由到普通聊天、心理咨询或高风险处理链路。</p>
+ * <p>把每輪輸入路由到普通聊天、心理諮詢或高風險處理鏈路。</p>
  */
 public class IntentClassifier {
 
     private static final List<String> GENERAL_TASK_WORDS = List.of(
-            "java", "python", "javascript", "代码", "编程", "程序", "算法", "数据库", "spring", "maven",
-            "前端", "后端", "项目", "接口", "bug", "报错", "作业", "论文", "翻译", "总结", "解释",
-            "怎么写", "如何", "是什么", "为什么", "给我", "帮我", "推荐", "查询", "天气", "路线"
+            "java", "python", "javascript", "代碼", "編程", "程序", "算法", "數據庫", "spring", "maven",
+            "前端", "後端", "項目", "接口", "bug", "報錯", "作業", "論文", "翻譯", "總結", "解釋",
+            "怎麼寫", "如何", "是什麼", "爲什麼", "給我", "幫我", "推薦", "查詢", "天氣", "路線"
     );
 
     private final AiClient aiClient;
@@ -34,12 +34,12 @@ public class IntentClassifier {
     }
 
     public IntentType classify(String input, List<AiMessage> history) {
-        String normalized = input.toLowerCase(Locale.ROOT);
-        // 高风险表达优先级最高，不交给普通任务规则覆盖。
+        String normalized = RiskLexicon.normalizeChineseForMatching(input.toLowerCase(Locale.ROOT));
+        // 高風險表達優先級最高，不交給普通任務規則覆蓋。
         if (RiskLexicon.hasHighRiskSignal(normalized)) {
             return IntentType.RISK;
         }
-        // 学习、编程、作业等明确普通任务直接走 CHAT，避免误触发后台评估。
+        // 學習、編程、作業等明確普通任務直接走 CHAT，避免誤觸發後臺評估。
         if (isClearlyGeneralTask(normalized)) {
             return IntentType.CHAT;
         }
@@ -76,7 +76,7 @@ public class IntentClassifier {
         }
         return history.stream()
                 .skip(Math.max(0, history.size() - 6))
-                .map(message -> message.content().toLowerCase())
+                .map(message -> RiskLexicon.normalizeChineseForMatching(message.content().toLowerCase(Locale.ROOT)))
                 .anyMatch(RiskLexicon::hasConsultSignal);
     }
 }

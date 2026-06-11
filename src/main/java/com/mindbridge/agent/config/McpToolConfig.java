@@ -25,10 +25,10 @@ import org.springframework.web.reactive.function.client.WebClient;
 
 @Configuration
 /**
- * MCP 工具链配置。
+ * MCP 工具鏈配置。
  *
- * <p>这里按配置选择 Excel 写入方式和预警通知方式，同时提供独立线程池，
- * 避免后台工具调用阻塞学生端聊天。</p>
+ * <p>這裏按配置選擇 Excel 寫入方式和預警通知方式，同時提供獨立線程池，
+ * 避免後臺工具調用阻塞學生端聊天。</p>
  */
 public class McpToolConfig {
 

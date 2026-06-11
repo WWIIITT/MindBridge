@@ -1,11 +1,11 @@
 package com.mindbridge.agent.service.agent;
 
 /**
- * 单个 Agent 执行一步后返回的决策摘要。
+ * 單個 Agent 執行一步後返回的決策摘要。
  *
- * @param action 当前执行的动作
- * @param observation 动作结果摘要，用于后续调试和可视化 trace
- * @param complete 是否结束本轮 agent loop
+ * @param action 當前執行的動作
+ * @param observation 動作結果摘要，用於後續調試和可視化 trace
+ * @param complete 是否結束本輪 agent loop
  */
 public record AgentDecision(
         AgentAction action,

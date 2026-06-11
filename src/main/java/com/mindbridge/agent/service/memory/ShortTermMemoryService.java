@@ -11,9 +11,9 @@ import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 
 /**
- * Redis 短期记忆服务。
+ * Redis 短期記憶服務。
  *
- * <p>每个会话只保留最近 N 轮上下文，完整对话仍然写入 MySQL 作为长期记忆。</p>
+ * <p>每個會話只保留最近 N 輪上下文，完整對話仍然寫入 MySQL 作爲長期記憶。</p>
  */
 @Service
 public class ShortTermMemoryService {

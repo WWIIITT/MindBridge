@@ -6,9 +6,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 
 /**
- * MindBridge 后端启动入口。
+ * MindBridge 後端啓動入口。
  *
- * <p>应用启动后会加载配置、初始化演示账号和知识库，并开放聊天、后台记录、知识库上传等接口。</p>
+ * <p>應用啓動後會加載配置、初始化演示賬號和知識庫，並開放聊天、後臺記錄、知識庫上傳等接口。</p>
  */
 @SpringBootApplication
 @EnableConfigurationProperties(MindBridgeProperties.class)

@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 /**
  * 主控 Agent。
  *
- * <p>Supervisor 负责把本轮输入路由到普通陪伴、心理咨询或风险守护链路。</p>
+ * <p>Supervisor 負責把本輪輸入路由到普通陪伴、心理諮詢或風險守護鏈路。</p>
  */
 @Component
 public class SupervisorAgent implements MindBridgeAgent {

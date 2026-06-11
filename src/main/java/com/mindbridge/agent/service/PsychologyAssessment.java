@@ -4,9 +4,9 @@ import com.mindbridge.agent.domain.EmotionLabel;
 import com.mindbridge.agent.domain.RiskLevel;
 
 /**
- * 一次后台心理状态评估结果。
+ * 一次後臺心理狀態評估結果。
  *
- * <p>该对象只在服务端报告和工具链中使用，不作为学生端消息内容。</p>
+ * <p>該對象只在服務端報告和工具鏈中使用，不作爲學生端消息內容。</p>
  */
 public record PsychologyAssessment(
         EmotionLabel emotion,

@@ -10,9 +10,9 @@ import java.util.List;
 import org.springframework.stereotype.Component;
 
 /**
- * 知识库 Agent。
+ * 知識庫 Agent。
  *
- * <p>只有心理咨询和风险场景才检索 Chroma/RAG，普通学习闲聊不会被强行转成心理测评。</p>
+ * <p>只有心理諮詢和風險場景才檢索 Chroma/RAG，普通學習閒聊不會被強行轉成心理測評。</p>
  */
 @Component
 public class KnowledgeAgent implements MindBridgeAgent {
@@ -68,15 +68,15 @@ public class KnowledgeAgent implements MindBridgeAgent {
             String query = aiClient.complete(List.of(
                     AiMessage.system("""
                             你是 MindBridge 的 KnowledgeAgent。
-                            你的任务是把学生输入改写成适合检索校园心理知识库的中文查询词。
-                            只输出查询词本身，不要解释，不要超过 40 个字。
-                            聚焦心理支持、校园求助流程、风险处理或情绪调节知识。
+                            你的任務是把學生輸入改寫成適合檢索校園心理知識庫的中文查詢詞。
+                            只輸出查詢詞本身，不要解釋，不要超過 40 個字。
+                            聚焦心理支持、校園求助流程、風險處理或情緒調節知識。
                             """),
                     AiMessage.user("""
-                            记忆摘要：
+                            記憶摘要：
                             %s
 
-                            当前输入：
+                            當前輸入：
                             %s
                             """.formatted(context.memoryBrief(), context.modelInput()))
             )).trim();
@@ -94,14 +94,14 @@ public class KnowledgeAgent implements MindBridgeAgent {
             String decision = aiClient.complete(List.of(
                     AiMessage.system("""
                             你是 MindBridge 的 KnowledgeAgent。
-                            判断检索结果是否足以支持后续心理关怀回答。
-                            只输出 SUFFICIENT 或 INSUFFICIENT。
+                            判斷檢索結果是否足以支持後續心理關懷回答。
+                            只輸出 SUFFICIENT 或 INSUFFICIENT。
                             """),
                     AiMessage.user("""
-                            当前输入：
+                            當前輸入：
                             %s
 
-                            检索结果：
+                            檢索結果：
                             %s
                             """.formatted(context.modelInput(), formatResults(results)))
             )).trim().toUpperCase();
@@ -116,17 +116,17 @@ public class KnowledgeAgent implements MindBridgeAgent {
             String query = aiClient.complete(List.of(
                     AiMessage.system("""
                             你是 MindBridge 的 KnowledgeAgent。
-                            上一次检索信息不足，请给出一个新的、更具体的中文检索 query。
-                            只输出查询词本身，不要解释，不要超过 40 个字。
+                            上一次檢索信息不足，請給出一個新的、更具體的中文檢索 query。
+                            只輸出查詢詞本身，不要解釋，不要超過 40 個字。
                             """),
                     AiMessage.user("""
-                            当前输入：
+                            當前輸入：
                             %s
 
                             上一次 query：
                             %s
 
-                            上一次结果：
+                            上一次結果：
                             %s
                             """.formatted(context.modelInput(), previousQuery, formatResults(results)))
             )).trim();
@@ -138,7 +138,7 @@ public class KnowledgeAgent implements MindBridgeAgent {
 
     private String formatResults(List<SearchResult> results) {
         if (results.isEmpty()) {
-            return "无";
+            return "無";
         }
         return String.join("\n", results.stream()
                 .limit(4)
@@ -148,7 +148,7 @@ public class KnowledgeAgent implements MindBridgeAgent {
 
     private String normalizeQuery(String value, String fallback) {
         String query = value
-                .replace("查询词：", "")
+                .replace("查詢詞：", "")
                 .replace("query:", "")
                 .replace("Query:", "")
                 .replaceAll("[\\r\\n]+", " ")

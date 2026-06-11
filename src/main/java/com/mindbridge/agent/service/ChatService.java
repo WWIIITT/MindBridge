@@ -33,9 +33,9 @@ import reactor.core.scheduler.Schedulers;
 
 @Service
 /**
- * 学生聊天主流程服务。
+ * 學生聊天主流程服務。
  *
- * <p>负责会话落库、模型流式调用和后台报告触发；意图路由、记忆读取、RAG 与风险评估
+ * <p>負責會話落庫、模型流式調用和後臺報告觸發；意圖路由、記憶讀取、RAG 與風險評估
  * 由 AgentRuntimeService 中的多 Agent loop 完成。</p>
  */
 public class ChatService {
@@ -76,13 +76,13 @@ public class ChatService {
     }
 
     public Flux<ServerSentEvent<ChatStreamEvent>> streamChat(Long userId, ChatRequest request) {
-        // 聊天接口使用 SSE 流式返回；数据库读写放到 boundedElastic，避免阻塞响应线程。
+        // 聊天接口使用 SSE 流式返回；數據庫讀寫放到 boundedElastic，避免阻塞響應線程。
         return Mono.fromCallable(() -> prepare(userId, request))
                 .subscribeOn(Schedulers.boundedElastic())
                 .flatMapMany(this::streamPrepared)
                 .onErrorResume(exception -> Flux.just(event(
                         "error",
-                        ChatStreamEvent.error(null, "服务暂时不可用：" + exception.getMessage()))));
+                        ChatStreamEvent.error(null, "服務暫時不可用：" + exception.getMessage()))));
     }
 
     private PreparedConversation prepare(Long userId, ChatRequest request) {
@@ -119,16 +119,16 @@ public class ChatService {
                 .timeout(Duration.ofSeconds(45))
                 .onErrorResume(exception -> Flux.just(event(
                         "error",
-                        ChatStreamEvent.error(prepared.session().getPublicId(), "模型响应超时或失败，请稍后重试。"))))
+                        ChatStreamEvent.error(prepared.session().getPublicId(), "模型響應超時或失敗，請稍後重試。"))))
                 .switchIfEmpty(Flux.just(event(
                         "error",
-                        ChatStreamEvent.error(prepared.session().getPublicId(), "模型没有返回内容，请稍后重试。"))));
+                        ChatStreamEvent.error(prepared.session().getPublicId(), "模型沒有返回內容，請稍後重試。"))));
 
         Mono<ServerSentEvent<ChatStreamEvent>> done = Mono.fromCallable(() -> {
             if (!assistantReply.isEmpty()) {
                 saveMessage(prepared.user(), prepared.session(), MessageRole.ASSISTANT, assistantReply.toString());
             }
-            // 工具链在模型回复完成后异步执行，不打断学生端正在进行的对话体验。
+            // 工具鏈在模型回覆完成後異步執行，不打斷學生端正在進行的對話體驗。
             if (prepared.reportId() != null) {
                 toolOrchestrationService.handleAsync(prepared.reportId());
             }
@@ -189,7 +189,7 @@ public class ChatService {
             List<SearchResult> retrieved,
             List<AiMessage> history
     ) {
-        // 检索片段只作为系统上下文给模型使用，不直接展示后台评估信息给学生。
+        // 檢索片段只作爲系統上下文給模型使用，不直接展示後臺評估信息給學生。
         String context = String.join("\n\n", retrieved.stream()
                 .map(result -> "- [" + result.source() + "] " + result.content())
                 .toList());
@@ -204,7 +204,7 @@ public class ChatService {
     }
 
     private int messageWindowLimit() {
-        // history-limit 以轮次理解，这里乘 2 保留用户和助手两侧消息。
+        // history-limit 以輪次理解，這裏乘 2 保留用戶和助手兩側消息。
         return Math.max(2, properties.getChat().getHistoryLimit() * 2);
     }
 

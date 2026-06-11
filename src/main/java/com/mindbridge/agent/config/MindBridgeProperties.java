@@ -8,8 +8,8 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 /**
  * mindbridge.* 配置映射。
  *
- * <p>所有业务配置集中在这里，便于通过 application.yml 或环境变量切换模型、
- * RAG、知识库切块、Excel 写入和邮件预警行为。</p>
+ * <p>所有業務配置集中在這裏，便於通過 application.yml 或環境變量切換模型、
+ * RAG、知識庫切塊、Excel 寫入和郵件預警行爲。</p>
  */
 public class MindBridgeProperties {
 
@@ -47,9 +47,9 @@ public class MindBridgeProperties {
     public static class Ai {
         /** 模型提供方：ollama、openai 或 mock。 */
         private String provider = "ollama";
-        /** 生成温度，值越高回答越发散。 */
+        /** 生成溫度，值越高回答越發散。 */
         private double temperature = 0.35;
-        /** 学生端单次回复的最大生成 token 数，避免本地模型无边界扩写。 */
+        /** 學生端單次回覆的最大生成 token 數，避免本地模型無邊界擴寫。 */
         private int maxTokens = 512;
         private final Ollama ollama = new Ollama();
         private final OpenAi openai = new OpenAi();
@@ -88,9 +88,9 @@ public class MindBridgeProperties {
     }
 
     public static class Ollama {
-        /** 本地模型服务地址。 */
+        /** 本地模型服務地址。 */
         private String baseUrl = "http://localhost:11434";
-        /** MindBridge 项目模型名称。 */
+        /** MindBridge 項目模型名稱。 */
         private String model = "mindbridge-qwen2.5-7b-ft:latest";
 
         public String getBaseUrl() {
@@ -113,9 +113,9 @@ public class MindBridgeProperties {
     public static class OpenAi {
         /** OpenAI 兼容接口地址。 */
         private String baseUrl = "https://api.openai.com";
-        /** OpenAI API Key，未配置时不能启用 openai provider。 */
+        /** OpenAI API Key，未配置時不能啓用 openai provider。 */
         private String apiKey = "";
-        /** OpenAI 聊天模型名称。 */
+        /** OpenAI 聊天模型名稱。 */
         private String model = "gpt-4o-mini";
 
         public String getBaseUrl() {
@@ -144,9 +144,9 @@ public class MindBridgeProperties {
     }
 
     public static class Chat {
-        /** 保留给模型的历史轮次数，服务层会换算成用户/助手消息条数。 */
+        /** 保留給模型的歷史輪次數，服務層會換算成用戶/助手消息條數。 */
         private int historyLimit = 10;
-        /** Redis 短期记忆 TTL，过期后可从 MySQL 长期记忆恢复最近上下文。 */
+        /** Redis 短期記憶 TTL，過期後可從 MySQL 長期記憶恢復最近上下文。 */
         private long shortMemoryTtlHours = 24;
 
         public int getHistoryLimit() {
@@ -167,11 +167,11 @@ public class MindBridgeProperties {
     }
 
     public static class Embedding {
-        /** Embedding 服务地址。 */
+        /** Embedding 服務地址。 */
         private String baseUrl = "https://api.openai.com";
-        /** Embedding API Key，留空时自动走本地检索兜底。 */
+        /** Embedding API Key，留空時自動走本地檢索兜底。 */
         private String apiKey = "";
-        /** 文档要求的默认 embedding 模型。 */
+        /** 文檔要求的默認 embedding 模型。 */
         private String model = "text-embedding-3-small";
 
         public String getBaseUrl() {
@@ -200,9 +200,9 @@ public class MindBridgeProperties {
     }
 
     public static class Knowledge {
-        /** 每次 RAG 检索返回的候选片段数量。 */
+        /** 每次 RAG 檢索返回的候選片段數量。 */
         private int topK = 4;
-        /** 是否启用外部 Chroma 向量库。 */
+        /** 是否啓用外部 Chroma 向量庫。 */
         private boolean useChroma;
         private String chromaBaseUrl = "http://localhost:8000";
         private String chromaCollection = "mindbridge_knowledge";
@@ -259,15 +259,15 @@ public class MindBridgeProperties {
     }
 
     public static class RagEval {
-        /** 是否在启动后运行 RAG 检索评测。 */
+        /** 是否在啓動後運行 RAG 檢索評測。 */
         private boolean enabled;
-        /** 评测集 JSON 路径，支持 classpath: 或文件系统路径。 */
+        /** 評測集 JSON 路徑，支持 classpath: 或文件系統路徑。 */
         private String dataset = "classpath:rag-eval/mindbridge-rag-eval.json";
-        /** 评测 TopK。 */
+        /** 評測 TopK。 */
         private int topK = 4;
-        /** 是否在评测完成后退出应用，便于命令行/CI 单独跑评测。 */
+        /** 是否在評測完成後退出應用，便於命令行/CI 單獨跑評測。 */
         private boolean exitAfterRun;
-        /** JSON 报告输出路径，留空则只打印控制台摘要。 */
+        /** JSON 報告輸出路徑，留空則只打印控制檯摘要。 */
         private String outputPath = "target/rag-eval-report.json";
 
         public boolean isEnabled() {
@@ -325,7 +325,7 @@ public class MindBridgeProperties {
     }
 
     public static class Excel {
-        /** Excel 写入模式：local、http 或 mcp。 */
+        /** Excel 寫入模式：local、http 或 mcp。 */
         private String mode = "local";
         private String url = "http://localhost:8081";
         private String localPath = "./data/mindbridge-reports.xlsx";
@@ -356,13 +356,13 @@ public class MindBridgeProperties {
     }
 
     public static class Email {
-        /** 邮件预警模式：log、smtp、http 或 mcp。 */
+        /** 郵件預警模式：log、smtp、http 或 mcp。 */
         private String mode = "log";
         private String url = "http://localhost:8082";
         private String from = "mindbridge@example.com";
         private List<String> recipients = new ArrayList<>(List.of("counselor@example.com"));
         private int maxRetries = 2;
-        /** MCP Server 收到 send_risk_alert 工具调用后实际投递方式：log 或 smtp。 */
+        /** MCP Server 收到 send_risk_alert 工具調用後實際投遞方式：log 或 smtp。 */
         private String mcpServerDeliveryMode = "log";
 
         public String getMode() {

@@ -3,9 +3,9 @@ package com.mindbridge.agent.service.mcp;
 import com.mindbridge.agent.domain.PsychologicalReport;
 
 /**
- * 心理报告写入 Excel 的工具接口。
+ * 心理報告寫入 Excel 的工具接口。
  *
- * <p>本地文件写入和远程 MCP 写入都实现这个接口。</p>
+ * <p>本地文件寫入和遠程 MCP 寫入都實現這個接口。</p>
  */
 public interface ExcelReportWriter {
 

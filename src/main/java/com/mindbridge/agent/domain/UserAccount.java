@@ -17,9 +17,9 @@ import java.util.Set;
 @Entity
 @Table(name = "user_accounts")
 /**
- * 系统账号。
+ * 系統賬號。
  *
- * <p>学生账号用于聊天，管理员账号用于查看后台记录、工具状态和知识库维护。</p>
+ * <p>學生賬號用於聊天，管理員賬號用於查看後臺記錄、工具狀態和知識庫維護。</p>
  */
 public class UserAccount {
 

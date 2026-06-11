@@ -8,7 +8,7 @@ import com.mindbridge.agent.service.knowledge.SearchResult;
 import java.util.List;
 
 /**
- * Agent loop 完成后的结构化结果。
+ * Agent loop 完成後的結構化結果。
  */
 public record AgentRunResult(
         IntentType intent,

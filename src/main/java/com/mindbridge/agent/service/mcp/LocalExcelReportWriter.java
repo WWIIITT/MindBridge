@@ -15,9 +15,9 @@ import org.apache.poi.ss.usermodel.WorkbookFactory;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 /**
- * 本地 Excel 文件写入实现。
+ * 本地 Excel 文件寫入實現。
  *
- * <p>适合演示环境使用，会把报告追加到 data 目录下的工作簿中。</p>
+ * <p>適合演示環境使用，會把報告追加到 data 目錄下的工作簿中。</p>
  */
 public class LocalExcelReportWriter implements ExcelReportWriter {
 
@@ -32,7 +32,7 @@ public class LocalExcelReportWriter implements ExcelReportWriter {
     public void write(PsychologicalReport report) {
         synchronized (lock) {
             try {
-                // 写文件需要串行化，防止多个高风险报告同时写入造成工作簿损坏。
+                // 寫文件需要串行化，防止多個高風險報告同時寫入造成工作簿損壞。
                 if (path.getParent() != null) {
                     Files.createDirectories(path.getParent());
                 }
@@ -62,7 +62,7 @@ public class LocalExcelReportWriter implements ExcelReportWriter {
         if (!Files.exists(path)) {
             return new XSSFWorkbook();
         }
-        // 已存在时追加到原工作簿，保留历史写入记录。
+        // 已存在時追加到原工作簿，保留歷史寫入記錄。
         try (InputStream inputStream = Files.newInputStream(path)) {
             return WorkbookFactory.create(inputStream);
         }
@@ -70,8 +70,8 @@ public class LocalExcelReportWriter implements ExcelReportWriter {
 
     private void writeHeader(Row row) {
         String[] headers = {
-                "报告ID", "用户ID", "账号", "会话ID", "意图", "情绪标签", "情绪总分",
-                "风险等级", "置信度", "判断摘要", "对话内容", "对话时间"
+                "報告ID", "用戶ID", "賬號", "會話ID", "意圖", "情緒標籤", "情緒總分",
+                "風險等級", "置信度", "判斷摘要", "對話內容", "對話時間"
         };
         for (int i = 0; i < headers.length; i++) {
             cell(row, i).setCellValue(headers[i]);

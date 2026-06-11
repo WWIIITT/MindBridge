@@ -1,7 +1,7 @@
 package com.mindbridge.agent.service.ai;
 
 /**
- * 发送给模型的一条消息。
+ * 發送給模型的一條消息。
  *
  * <p>role 使用 OpenAI/Ollama 兼容格式：system、user、assistant。</p>
  */

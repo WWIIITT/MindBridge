@@ -11,9 +11,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * 一轮对话的 Agent 工作上下文。
+ * 一輪對話的 Agent 工作上下文。
  *
- * <p>Agent loop 中的每个专家 Agent 只更新自己负责的字段，下一步 Agent 根据这些状态继续执行。</p>
+ * <p>Agent loop 中的每個專家 Agent 只更新自己負責的字段，下一步 Agent 根據這些狀態繼續執行。</p>
  */
 public class AgentContext {
 
@@ -27,9 +27,9 @@ public class AgentContext {
     private List<AiMessage> modelHistory = List.of();
     private List<AiMessage> responseMessages = List.of();
     private List<SearchResult> retrievedKnowledge = List.of();
-    private String memoryBrief = "无相关历史记忆。";
+    private String memoryBrief = "無相關歷史記憶。";
     private String knowledgeQuery;
-    private String responsePlan = "自然回答当前问题。";
+    private String responsePlan = "自然回答當前問題。";
     private IntentType intent;
     private PsychologyAssessment assessment;
     private RiskLevel riskLevel = RiskLevel.LOW;

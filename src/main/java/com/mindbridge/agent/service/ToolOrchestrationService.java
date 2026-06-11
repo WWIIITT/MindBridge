@@ -17,9 +17,9 @@ import org.springframework.transaction.support.TransactionTemplate;
 
 @Service
 /**
- * 后台工具编排服务。
+ * 後臺工具編排服務。
  *
- * <p>心理报告生成后，按“写 Excel -> 高风险发预警”的顺序执行工具链并持久化状态。</p>
+ * <p>心理報告生成後，按“寫 Excel -> 高風險發預警”的順序執行工具鏈並持久化狀態。</p>
  */
 public class ToolOrchestrationService {
 
@@ -55,7 +55,7 @@ public class ToolOrchestrationService {
             try {
                 transactionTemplate.executeWithoutResult(status -> handleInTransaction(reportId));
             } catch (Exception ignored) {
-                // 工具执行失败会写入报告状态，这里吞掉异常，避免后台任务影响聊天主流程。
+                // 工具執行失敗會寫入報告狀態，這裏吞掉異常，避免後臺任務影響聊天主流程。
             }
         });
     }
@@ -69,7 +69,7 @@ public class ToolOrchestrationService {
         PsychologicalReport managedReport = reportRepository.findById(reportId)
                 .orElseThrow(() -> new IllegalArgumentException("Report not found: " + reportId));
         writeExcel(managedReport);
-        // 只有 Excel 写入成功且风险等级为 HIGH，才进入预警通知，和文档中的工具链顺序保持一致。
+        // 只有 Excel 寫入成功且風險等級爲 HIGH，才進入預警通知，和文檔中的工具鏈順序保持一致。
         if (managedReport.getRiskLevel() == RiskLevel.HIGH && managedReport.getExcelStatus() == ToolStatus.SUCCESS) {
             sendAlerts(managedReport);
         }
@@ -96,7 +96,7 @@ public class ToolOrchestrationService {
 
             boolean sent = false;
             int maxAttempts = Math.max(1, properties.getMcp().getEmail().getMaxRetries() + 1);
-            // 每个收件人独立重试和落库，管理员后台可以看到每封通知的最终状态。
+            // 每個收件人獨立重試和落庫，管理員後臺可以看到每封通知的最終狀態。
             for (int attempt = 0; attempt < maxAttempts && !sent; attempt++) {
                 try {
                     alertRecord.incrementAttempts();

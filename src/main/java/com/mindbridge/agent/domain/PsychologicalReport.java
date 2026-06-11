@@ -17,9 +17,9 @@ import java.time.Instant;
 @Entity
 @Table(name = "psychological_reports")
 /**
- * 后台心理状态报告。
+ * 後臺心理狀態報告。
  *
- * <p>报告记录的是后台评估和工具执行状态，不会作为学生端展示内容。</p>
+ * <p>報告記錄的是後臺評估和工具執行狀態，不會作爲學生端展示內容。</p>
  */
 public class PsychologicalReport {
 

@@ -6,9 +6,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * 日志预警实现。
+ * 日誌預警實現。
  *
- * <p>用于本地演示或无 SMTP 环境时验证高风险链路是否被触发。</p>
+ * <p>用於本地演示或無 SMTP 環境時驗證高風險鏈路是否被觸發。</p>
  */
 public class LogAlertNotifier implements AlertNotifier {
 

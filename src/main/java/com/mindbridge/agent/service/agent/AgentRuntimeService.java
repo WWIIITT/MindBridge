@@ -6,10 +6,10 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 /**
- * MindBridge Agent Loop 运行时。
+ * MindBridge Agent Loop 運行時。
  *
- * <p>每轮学生输入都会进入有限步循环：读取记忆、主控路由、知识检索、风险守护和回复规划。
- * 这里不是无限自主循环，而是受步数限制的安全 agent loop，适合心理安全场景。</p>
+ * <p>每輪學生輸入都會進入有限步循環：讀取記憶、主控路由、知識檢索、風險守護和回覆規劃。
+ * 這裏不是無限自主循環，而是受步數限制的安全 agent loop，適合心理安全場景。</p>
  */
 @Service
 public class AgentRuntimeService {
@@ -26,7 +26,7 @@ public class AgentRuntimeService {
             CompanionAgent companionAgent,
             CounselorAgent counselorAgent
     ) {
-        // 顺序就是 Supervisor 架构下的协作优先级；每个 Agent 通过 supports 判断是否该接手。
+        // 順序就是 Supervisor 架構下的協作優先級；每個 Agent 通過 supports 判斷是否該接手。
         this.agents = List.of(
                 memoryAgent,
                 supervisorAgent,

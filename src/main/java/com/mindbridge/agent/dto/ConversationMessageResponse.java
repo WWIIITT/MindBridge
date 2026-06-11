@@ -5,7 +5,7 @@ import com.mindbridge.agent.domain.MessageRole;
 import java.time.Instant;
 
 /**
- * 管理员查看完整会话时的单条消息响应。
+ * 管理員查看完整會話時的單條消息響應。
  */
 public record ConversationMessageResponse(
         Long id,

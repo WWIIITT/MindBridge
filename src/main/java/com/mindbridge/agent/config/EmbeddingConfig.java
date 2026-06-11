@@ -8,10 +8,10 @@ import org.springframework.web.reactive.function.client.WebClient;
 
 @Configuration
 /**
- * RAG 向量化客户端配置。
+ * RAG 向量化客戶端配置。
  *
- * <p>KnowledgeService 通过 EmbeddingClient 获取文本向量；如果没有配置 API Key，
- * 客户端会返回空向量并触发本地检索兜底。</p>
+ * <p>KnowledgeService 通過 EmbeddingClient 獲取文本向量；如果沒有配置 API Key，
+ * 客戶端會返回空向量並觸發本地檢索兜底。</p>
  */
 public class EmbeddingConfig {
 
