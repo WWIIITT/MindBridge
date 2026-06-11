@@ -1,0 +1,32 @@
+[
+  {
+    "id": "risk-high-policy",
+    "question": "学生明确说想自杀或者伤害自己时，系统应该怎么处理？",
+    "expectedSources": ["risk-policy.md"],
+    "expectedTerms": ["HIGH", "self-harm", "suicide", "alert"]
+  },
+  {
+    "id": "medium-risk-policy",
+    "question": "长期失眠、孤独和持续焦虑但没有自伤计划，属于什么风险等级？",
+    "expectedSources": ["risk-policy.md"],
+    "expectedTerms": ["MEDIUM", "insomnia", "low mood", "emotional distress"]
+  },
+  {
+    "id": "assistant-boundary",
+    "question": "心理助手能不能替代专业咨询师进行诊断和开药？",
+    "expectedSources": ["campus-mental-health.md"],
+    "expectedTerms": ["must not diagnose", "prescribe medication", "professional counselor"]
+  },
+  {
+    "id": "anxiety-guidance",
+    "question": "学生焦虑时，可以给哪些稳定情绪的建议？",
+    "expectedSources": ["campus-mental-health.md"],
+    "expectedTerms": ["grounding", "breathing", "sleep", "routine"]
+  },
+  {
+    "id": "low-mood-guidance",
+    "question": "学生情绪低落时，系统可以鼓励哪些行动？",
+    "expectedSources": ["campus-mental-health.md"],
+    "expectedTerms": ["small actions", "social connection", "journaling", "professional support"]
+  }
+]
