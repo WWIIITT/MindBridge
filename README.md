@@ -205,11 +205,46 @@ cd MindBridge
 ./scripts/run-dev.sh
 ```
 
-如果終端提示 `ollama: command not found`，說明只是命令鏈接沒建好；本項目腳本會自動嘗試 macOS 的 `/Applications/Ollama.app/Contents/Resources/ollama`，以及 WSL 中的 Windows 默認安裝位置 `/mnt/c/Users/<你的 Windows 用戶名>/AppData/Local/Programs/Ollama/ollama.exe`。從 WSL 調用 Windows `ollama.exe` 時，腳本會自動把 `Modelfile` 路徑轉成 Windows 路徑。如果仍找不到 Ollama，可以手動指定：
+如果在 WSL 中開發，建議直接安裝並使用 WSL 內的 Ollama，避免 Windows/WSL 之間的端口和模型庫不一致。`create-finetuned-model.sh`、`run-dev.sh` 和 `start-ollama.sh` 都只面向本機可訪問的 Ollama，不會自動配置 Windows 版 Ollama。
 
 ```bash
-OLLAMA_BIN="/mnt/c/Users/<你的 Windows 用戶名>/AppData/Local/Programs/Ollama/ollama.exe" \
-./scripts/create-finetuned-model.sh
+curl -fsSL https://ollama.com/install.sh | sh
+ollama serve
+```
+
+在另一個 WSL 終端建立模型並確認：
+
+```bash
+cd MindBridge
+OLLAMA_BASE_URL=http://127.0.0.1:11434 ./scripts/create-finetuned-model.sh
+curl http://127.0.0.1:11434/api/tags
+```
+
+結果中應包含 `mindbridge-qwen2.5-7b-ft:latest`。Ollama 會把導入後的模型保存到自己的模型庫；WSL 服務安裝方式下通常位於：
+
+```text
+/usr/share/ollama/.ollama/models
+```
+
+如果 `ollama serve` 提示 `bind: address already in use`，先檢查是否已有 Ollama 服務：
+
+```bash
+curl http://127.0.0.1:11434/api/tags
+sudo ss -ltnp | grep 11434
+```
+
+如果該端口已由 Ollama 佔用，可以直接使用現有服務；如果需要停止它：
+
+```bash
+sudo pkill ollama
+```
+
+如果需要使用其他本機端口，例如 `11435`：
+
+```bash
+OLLAMA_HOST=127.0.0.1:11435 ollama serve
+OLLAMA_BASE_URL=http://127.0.0.1:11435 ./scripts/create-finetuned-model.sh
+OLLAMA_BASE_URL=http://127.0.0.1:11435 ./scripts/run-dev.sh
 ```
 
 沒有本地模型、只想離線演示完整業務流程時，才使用 mock：
@@ -266,9 +301,12 @@ cd MindBridge
 
 ```bash
 docker compose up -d mysql redis chroma mailpit
-./scripts/create-finetuned-model.sh
 ./scripts/run-dev.sh
 ```
+
+`run-dev.sh` 會使用應用實際連到的 `OLLAMA_BASE_URL` 檢查 `mindbridge-qwen2.5-7b-ft:latest`。如果模型不存在且本地 `Modelfile` 可用，腳本會用正常 Ollama CLI 建立模型；也可以先手動執行 `create-finetuned-model.sh`。
+
+如果 WSL 提示 `The command 'docker' could not be found in this WSL 2 distro`，請打開 Docker Desktop，進入 `Settings -> Resources -> WSL Integration`，啓用目前使用的 WSL distro，套用後重新打開 WSL 終端。
 
 如果不是 macOS，或 Ollama/JDK/Maven 不在默認路徑，需要先安裝 Ollama、JDK 17、Maven，並按實際路徑設置 `OLLAMA_BIN`、`JAVA_HOME`、`MAVEN_BIN`。
 
